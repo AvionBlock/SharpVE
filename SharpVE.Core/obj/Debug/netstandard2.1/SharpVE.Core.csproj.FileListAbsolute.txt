@@ -1,0 +1,4 @@
+C:\Users\flyin\source\repos\AvionBlock\SharpVE\SharpVE.Core\obj\Debug\netstandard2.1\SharpVE.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\flyin\source\repos\AvionBlock\SharpVE\SharpVE.Core\obj\Debug\netstandard2.1\SharpVE.Core.AssemblyInfoInputs.cache
+C:\Users\flyin\source\repos\AvionBlock\SharpVE\SharpVE.Core\obj\Debug\netstandard2.1\SharpVE.Core.AssemblyInfo.cs
+C:\Users\flyin\source\repos\AvionBlock\SharpVE\SharpVE.Core\obj\Debug\netstandard2.1\SharpVE.Core.csproj.CoreCompileInputs.cache
