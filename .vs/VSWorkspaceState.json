@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\SharpVE",
+    "\\SharpVE\\WorldSpace",
+    "\\SharpVE\\WorldSpace\\Chunk"
   ],
+  "SelectedNode": "\\SharpVE\\WorldSpace\\Chunk\\ChunkColumn.cs",
   "PreviewInSolutionExplorer": false
 }
