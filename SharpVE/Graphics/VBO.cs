@@ -1,5 +1,6 @@
 ﻿using Silk.NET.Maths;
 using Silk.NET.OpenGL;
+using System.Runtime.InteropServices;
 
 namespace SharpVE.Graphics
 {
@@ -20,18 +21,18 @@ namespace SharpVE.Graphics
         /// <param name="data"></param>
         public void SetData(List<Vector3D<float>> data)
         {
-            var Vertices = new float[data.Count * 3];
-            for (int i = 0; i < data.Count; i++)
-            {
-                Vertices[i] = data[i].X;
-                Vertices[i + 1] = data[i].Y;
-                Vertices[i + 2] = data[i].Z;
-            }
+            var span = CollectionsMarshal.AsSpan(data);
+            var vertices = MemoryMarshal.Cast<Vector3D<float>, float>(span).ToArray();
             Bind();
-            fixed (void* v = &Vertices[0])
+            //Yup, Using pointers is apparently UNSAFE
+            unsafe
             {
-                GraphicsInstance.BufferData(BufferTargetARB.ArrayBuffer, (nuint)(data.Count * sizeof(float)), v, BufferUsageARB.StaticDraw);
+                fixed (void* v = &vertices[0])
+                {
+                    GraphicsInstance.BufferData(BufferTargetARB.ArrayBuffer, (nuint)(vertices.Length * sizeof(float)), v, BufferUsageARB.StaticDraw);
+                }
             }
+            Unbind();
         }
 
         /// <summary>
@@ -40,12 +41,34 @@ namespace SharpVE.Graphics
         /// <param name="data"></param>
         public void SetData(List<Vector2D<float>> data)
         {
-
+            var span = CollectionsMarshal.AsSpan(data);
+            var vertices = MemoryMarshal.Cast<Vector2D<float>, float>(span).ToArray();
+            Bind();
+            //Yup, Using pointers is apparently UNSAFE
+            unsafe
+            {
+                fixed (void* v = &vertices[0])
+                {
+                    GraphicsInstance.BufferData(BufferTargetARB.ArrayBuffer, (nuint)(vertices.Length * sizeof(float)), v, BufferUsageARB.StaticDraw);
+                }
+            }
+            Unbind();
         }
 
+        /// <summary>
+        /// Binds the buffer.
+        /// </summary>
         public void Bind()
         {
             GraphicsInstance.BindBuffer(BufferTargetARB.ArrayBuffer, ID);
+        }
+
+        /// <summary>
+        /// Unbinds the buffer.
+        /// </summary>
+        public void Unbind()
+        {
+            GraphicsInstance.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
         }
     }
 }
