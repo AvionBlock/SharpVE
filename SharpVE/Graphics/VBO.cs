@@ -70,5 +70,19 @@ namespace SharpVE.Graphics
         {
             GraphicsInstance.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
         }
+
+        /// <summary>
+        /// Deletes the VBO. Use this for disposing/cleaning up resources.
+        /// </summary>
+        public void Delete()
+        {
+            GraphicsInstance.DeleteBuffer(ID);
+        }
+        
+        //I actually dunno if I need this...
+        ~VBO()
+        {
+            Delete();
+        }
     }
 }
