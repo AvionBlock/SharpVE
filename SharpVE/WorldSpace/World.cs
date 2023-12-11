@@ -1,6 +1,7 @@
 ﻿using SharpVE.Worlds.Chunks;
-using OpenTK.Mathematics;
 using SharpVE.Blocks;
+using SharpVE.Registries;
+using Silk.NET.Maths;
 
 namespace SharpVE.WorldSpace
 {
@@ -13,30 +14,13 @@ namespace SharpVE.WorldSpace
         {
             Chunks = new List<ChunkColumn>();
             BlockRegistry = registry;
-
-            var chunk = new ChunkColumn(new Vector2i(0, 0), this);
-            var blockState = BlockRegistry.GetBlock("grass").GetBlockState();
-            for (int x = 0; x < ChunkColumn.SIZE; x++)
-            {
-                for (int y = 0; y < ChunkColumn.SIZE; y++)
-                {
-                    for (int z = 0; z < ChunkColumn.SIZE; z++)
-                    {
-                        if(new Random().Next(0,2) == 0)
-                        {
-                            chunk.SetBlock(new Vector3i(x, y, z), blockState);
-                        }
-                    }
-                }
-            }
-            Chunks.Add(chunk);
         }
 
-        public BlockState? GetBlock(Vector3i globalPosition)
+        public BlockState? GetBlock(Vector3D<int> globalPosition)
         {
             foreach (var chunk in Chunks)
             {
-                //Again. vector2i.Y is the Z position
+                //Again. vector2D.Y is the Z position
                 if (chunk.Position.X == Math.Floor((float)globalPosition.X / ChunkColumn.SIZE) && chunk.Position.Y == Math.Floor((float)globalPosition.Z / ChunkColumn.SIZE))
                 {
                     //Convert global to local position.
@@ -62,7 +46,7 @@ namespace SharpVE.WorldSpace
             return null;
         }
 
-        public void SetBlock(Vector3i globalPosition, BlockState block)
+        public void SetBlock(Vector3D<int> globalPosition, BlockState block)
         {
             foreach (var chunk in Chunks)
             {

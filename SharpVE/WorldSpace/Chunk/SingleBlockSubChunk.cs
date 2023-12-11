@@ -1,11 +1,11 @@
 ﻿using SharpVE.Interfaces;
 using SharpVE.Worlds.Chunks;
-using OpenTK.Mathematics;
 using SharpVE.Blocks;
+using Silk.NET.Maths;
 
 namespace SharpVE.WorldSpace.Chunk
 {
-    public class SingleBlockSubChunk : IChunkData
+    public class SingleBlockSubChunk : ISubChunk
     {
         private BlockState Block;
         public ChunkColumn Chunk { get; }
@@ -18,7 +18,7 @@ namespace SharpVE.WorldSpace.Chunk
             YLevel = yLevel;
         }
 
-        public BlockState? GetBlock(Vector3i localPosition)
+        public BlockState? GetBlock(Vector3D<int> localPosition)
         {
             if (localPosition.X >= ChunkColumn.SIZE || localPosition.Y >= ChunkColumn.SIZE || localPosition.Z >= ChunkColumn.SIZE || 
                 localPosition.X < 0 || localPosition.Y < 0|| localPosition.Z < 0)
@@ -29,14 +29,14 @@ namespace SharpVE.WorldSpace.Chunk
             return Block;
         }
 
-        public void SetBlock(Vector3i localPosition, BlockState block)
+        public void SetBlock(Vector3D<int> localPosition, BlockState block)
         {
             throw new Exception("Cannot set block in a single block sub chunk.");
         }
 
-        public Vector3i GetGlobalPosition()
+        public Vector3D<int> GetGlobalPosition()
         {
-            return new Vector3i(Chunk.Position.X * ChunkColumn.SIZE, YLevel * ChunkColumn.SIZE, Chunk.Position.Y * ChunkColumn.SIZE);
+            return new Vector3D<int>(Chunk.Position.X * ChunkColumn.SIZE, YLevel * ChunkColumn.SIZE, Chunk.Position.Y * ChunkColumn.SIZE);
         }
     }
 }

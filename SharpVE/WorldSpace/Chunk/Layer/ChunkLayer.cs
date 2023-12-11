@@ -1,9 +1,9 @@
 ﻿using SharpVE.Interfaces;
 using SharpVE.Worlds.Chunks;
-using OpenTK.Mathematics;
 using SharpVE.Blocks;
+using Silk.NET.Maths;
 
-namespace SharpVE.WorldSpace.Chunk
+namespace SharpVE.WorldSpace.Chunk.Layer
 {
     public class ChunkLayer : ILayerData
     {
@@ -18,39 +18,42 @@ namespace SharpVE.WorldSpace.Chunk
             Data = new ushort[ChunkColumn.SIZE * ChunkColumn.SIZE];
         }
 
-        public BlockState? GetBlock(Vector2i localPosition)
+        public BlockState? GetBlock(Vector2D<int> localPosition)
         {
             if (localPosition.X >= ChunkColumn.SIZE || localPosition.Y >= ChunkColumn.SIZE ||
                 localPosition.X < 0 || localPosition.Y < 0) return null;
 
-            int idx = (localPosition.X * ChunkColumn.SIZE) + localPosition.Y; //Yes. Y is Z value.
+            int idx = localPosition.X * ChunkColumn.SIZE + localPosition.Y; //Yes. Y is Z value.
             ushort blockId = Data[idx];
 
             Chunk.BlockStates.TryGetValue(blockId, out var blockState);
             return blockState;
         }
 
-        public void SetBlock(Vector2i localPosition, BlockState state)
+        public void SetBlock(Vector2D<int> localPosition, BlockState state)
         {
-            for(int i = 0; i < Chunk.BlockStates.Count; i++)
+            //Not implemented but necessary information.
+            /*
+            for (int i = 0; i < Chunk.BlockStates.Count; i++)
             {
                 var blockState = Chunk.BlockStates.ElementAt(i).Value;
                 if (blockState.Block.Equals(state.Block) && blockState.States.OrderBy(x => x.Key).SequenceEqual(state.States.OrderBy(x => x.Key)))
                 {
-                    int idx = (localPosition.X * ChunkColumn.SIZE) + localPosition.Y; //Yes. Y is Z value.
+                    int idx = localPosition.X * ChunkColumn.SIZE + localPosition.Y; //Yes. Y is Z value.
                     Data[idx] = (ushort)i;
                     return;
                 }
             }
 
             Chunk.BlockStates.Add(GetLowestAvailableId(), state);
-            int idz = (localPosition.X * ChunkColumn.SIZE) + localPosition.Y; //Yes. Y is Z value.
+            int idz = localPosition.X * ChunkColumn.SIZE + localPosition.Y; //Yes. Y is Z value.
             Data[idz] = (ushort)(Chunk.BlockStates.Count - 1);
+            */
         }
 
         private ushort GetLowestAvailableId()
         {
-            for(ushort i = 0; i < ushort.MaxValue; i++)
+            for (ushort i = 0; i < ushort.MaxValue; i++)
             {
                 if (!Chunk.BlockStates.ContainsKey(i))
                     return i;

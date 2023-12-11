@@ -1,9 +1,9 @@
 ﻿using SharpVE.Interfaces;
-using OpenTK.Mathematics;
 using SharpVE.Worlds.Chunks;
 using SharpVE.Blocks;
+using Silk.NET.Maths;
 
-namespace SharpVE.WorldSpace.Chunk
+namespace SharpVE.WorldSpace.Chunk.Layer
 {
     public class SingleBlockChunkLayer : ILayerData
     {
@@ -18,7 +18,7 @@ namespace SharpVE.WorldSpace.Chunk
             BlockId = blockId;
         }
 
-        public BlockState? GetBlock(Vector2i localPosition)
+        public BlockState? GetBlock(Vector2D<int> localPosition)
         {
             if (localPosition.X >= ChunkColumn.SIZE || localPosition.Y >= ChunkColumn.SIZE ||
                 localPosition.X < 0 || localPosition.Y < 0) return null;
@@ -27,7 +27,7 @@ namespace SharpVE.WorldSpace.Chunk
             return blockState;
         }
 
-        public void SetBlock(Vector2i localPosition, BlockState state)
+        public void SetBlock(Vector2D<int> localPosition, BlockState state)
         {
             throw new Exception("Cannot set block on a single block chunk layer!");
         }

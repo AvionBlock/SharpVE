@@ -1,11 +1,12 @@
 ﻿using SharpVE.Interfaces;
 using SharpVE.Worlds.Chunks;
-using OpenTK.Mathematics;
 using SharpVE.Blocks;
+using SharpVE.WorldSpace.Chunk.Layer;
+using Silk.NET.Maths;
 
 namespace SharpVE.WorldSpace.Chunk
 {
-    public class SubChunk : IChunkData
+    public class SubChunk : ISubChunk
     {
         private ILayerData[] Layers;
         public ChunkColumn Chunk { get; }
@@ -31,7 +32,7 @@ namespace SharpVE.WorldSpace.Chunk
             }
         }
 
-        public BlockState? GetBlock(Vector3i localPosition)
+        public BlockState? GetBlock(Vector3D<int> localPosition)
         {
             if (localPosition.Y >= ChunkColumn.SIZE || localPosition.Y < 0)
             {
@@ -39,10 +40,10 @@ namespace SharpVE.WorldSpace.Chunk
             }
 
             var layer = Layers[localPosition.Y];
-            return layer.GetBlock(new Vector2i(localPosition.X, localPosition.Z));
+            return layer.GetBlock(new Vector2D<int>(localPosition.X, localPosition.Z));
         }
 
-        public void SetBlock(Vector3i localPosition, BlockState block)
+        public void SetBlock(Vector3D<int> localPosition, BlockState block)
         {
             if (localPosition.Y >= ChunkColumn.SIZE || localPosition.Y < 0)
             {
@@ -53,13 +54,13 @@ namespace SharpVE.WorldSpace.Chunk
             if(layer is SingleBlockChunkLayer)
             {
                 var newLayer = new ChunkLayer(this, (byte)localPosition.Y);
-                newLayer.SetBlock(new Vector2i(localPosition.X, localPosition.Z), block);
+                newLayer.SetBlock(new Vector2D<int>(localPosition.X, localPosition.Z), block);
                 Layers[localPosition.Y] = newLayer;
             }
             else
             {
                 var chunkLayer = layer as ChunkLayer;
-                chunkLayer?.SetBlock(new Vector2i(localPosition.X, localPosition.Z), block);
+                chunkLayer?.SetBlock(new Vector2D<int>(localPosition.X, localPosition.Z), block);
                 if (chunkLayer != null && chunkLayer.Data.All(x => x == chunkLayer?.Data[0]))
                 {
                     Layers[localPosition.Y] = new SingleBlockChunkLayer(this, (byte)localPosition.Y, chunkLayer.Data[0]);
@@ -69,9 +70,9 @@ namespace SharpVE.WorldSpace.Chunk
             //I have no idea how to remove unused blockstates...
         }
 
-        public Vector3i GetGlobalPosition()
+        public Vector3D<int> GetGlobalPosition()
         {
-            return new Vector3i(Chunk.Position.X * ChunkColumn.SIZE, YLevel * ChunkColumn.SIZE, Chunk.Position.Y * ChunkColumn.SIZE);
+            return new Vector3D<int>(Chunk.Position.X * ChunkColumn.SIZE, YLevel * ChunkColumn.SIZE, Chunk.Position.Y * ChunkColumn.SIZE);
         }
     }
 }

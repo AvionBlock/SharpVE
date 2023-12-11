@@ -1,8 +1,8 @@
-﻿using SharpVE.Interfaces;
-using OpenTK.Mathematics;
-using SharpVE.WorldSpace;
+﻿using SharpVE.WorldSpace;
 using SharpVE.WorldSpace.Chunk;
 using SharpVE.Blocks;
+using Silk.NET.Maths;
+using SharpVE.Interfaces;
 
 namespace SharpVE.Worlds.Chunks
 {
@@ -14,18 +14,18 @@ namespace SharpVE.Worlds.Chunks
         public const short MINY = -64;
         #endregion;
 
-        public readonly Vector2i Position;
+        public readonly Vector2D<int> Position;
         public readonly World ParentWorld;
-        public IChunkData[] Sections;
+        public ISubChunk[] Sections;
 
-        public ChunkColumn(Vector2i position, World world)
+        public ChunkColumn(Vector2D<int> position, World world)
         {
             //Do chunk checks first
             if (SIZE > byte.MaxValue) throw new Exception($"Chunk size of {SIZE} cannot be larger than subchunk byte size of {byte.MaxValue}!");
             if (HEIGHT % SIZE != 0) throw new Exception($"Chunk height of {HEIGHT} is not divisible by chunk size of {SIZE}!");
             if (MINY % SIZE != 0) throw new Exception($"Minimum chunk Y level of {MINY} is not divisible by chunk size of {SIZE}!");
 
-            Sections = new IChunkData[HEIGHT/SIZE];
+            Sections = new ISubChunk[HEIGHT/SIZE];
             Position = position;
             ParentWorld = world;
 
@@ -35,7 +35,7 @@ namespace SharpVE.Worlds.Chunks
             }
         }
 
-        public BlockState? GetBlock(Vector3i localPosition)
+        public BlockState? GetBlock(Vector3D<int> localPosition)
         {
             int yPosSection = localPosition.Y / SIZE;
             if(yPosSection < 0 || yPosSection >= Sections.Length)
@@ -46,7 +46,7 @@ namespace SharpVE.Worlds.Chunks
             return Sections[yPosSection].GetBlock(localPosition);
         }
 
-        public void SetBlock(Vector3i localPosition, BlockState block)
+        public void SetBlock(Vector3D<int> localPosition, BlockState block)
         {
             int yPosSection = localPosition.Y / SIZE;
             if (yPosSection < 0 || yPosSection >= Sections.Length)
