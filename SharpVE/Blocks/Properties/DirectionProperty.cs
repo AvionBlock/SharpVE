@@ -1,10 +1,8 @@
-﻿using SharpVE.Interfaces;
-
-namespace SharpVE.Blocks.Properties
+﻿namespace SharpVE.Blocks.Properties
 {
     public class DirectionProperty : Property<Direction>
     {
-
+        protected DirectionProperty(string name) : base(name) { }
     }
 
     public enum Direction
