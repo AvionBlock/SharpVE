@@ -1,12 +1,11 @@
 ﻿using Silk.NET.OpenGL;
+using System.Runtime.InteropServices;
 
 namespace SharpVE.Graphics
 {
     public class IBO
     {
         public uint ID { get; private set; }
-        public int Length => Indices.Length;
-        private uint[] Indices;
 
         protected readonly GL GraphicsInstance;
 
@@ -14,7 +13,6 @@ namespace SharpVE.Graphics
         {
             ID = gl.GenBuffer();
             GraphicsInstance = gl;
-            Indices = new uint[0];
         }
 
         /// <summary>
@@ -23,15 +21,9 @@ namespace SharpVE.Graphics
         /// <param name="data"></param>
         public void SetData(List<uint> data)
         {
-            Indices = data.ToArray();
+            var span = CollectionsMarshal.AsSpan(data);
             Bind();
-            unsafe
-            {
-                fixed (void* i = &Indices[0])
-                {
-                    GraphicsInstance.BufferData(BufferTargetARB.ElementArrayBuffer, (nuint)(Indices.Length * sizeof(uint)), i, BufferUsageARB.StaticDraw);
-                }
-            }
+            GraphicsInstance.BufferData(BufferTargetARB.ElementArrayBuffer, (ReadOnlySpan<uint>)span, BufferUsageARB.StaticDraw);
         }
 
         /// <summary>

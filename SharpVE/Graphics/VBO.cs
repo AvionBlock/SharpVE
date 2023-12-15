@@ -22,16 +22,10 @@ namespace SharpVE.Graphics
         public void SetData(List<Vector3D<float>> data)
         {
             var span = CollectionsMarshal.AsSpan(data);
-            var vertices = MemoryMarshal.Cast<Vector3D<float>, float>(span).ToArray();
+            var vertices = MemoryMarshal.Cast<Vector3D<float>, float>(span);
+
             Bind();
-            //Yup, Using pointers is apparently UNSAFE
-            unsafe
-            {
-                fixed (void* v = &vertices[0])
-                {
-                    GraphicsInstance.BufferData(BufferTargetARB.ArrayBuffer, (nuint)(vertices.Length * sizeof(float)), v, BufferUsageARB.StaticDraw);
-                }
-            }
+            GraphicsInstance.BufferData(BufferTargetARB.ArrayBuffer, (ReadOnlySpan<float>)vertices, BufferUsageARB.StaticDraw);
             Unbind();
         }
 
