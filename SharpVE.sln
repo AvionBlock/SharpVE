@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpVE", "SharpVE\SharpVE.csproj", "{BE9B575D-A57E-4214-BE06-66DFCB557388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpVE", "SharpVE\SharpVE.csproj", "{BE9B575D-A57E-4214-BE06-66DFCB557388}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpVE.Core", "SharpVE.Core\SharpVE.Core.csproj", "{342510D8-1191-45A2-B4A7-A52007B0D309}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BE9B575D-A57E-4214-BE06-66DFCB557388}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE9B575D-A57E-4214-BE06-66DFCB557388}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE9B575D-A57E-4214-BE06-66DFCB557388}.Release|Any CPU.Build.0 = Release|Any CPU
+		{342510D8-1191-45A2-B4A7-A52007B0D309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{342510D8-1191-45A2-B4A7-A52007B0D309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{342510D8-1191-45A2-B4A7-A52007B0D309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{342510D8-1191-45A2-B4A7-A52007B0D309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
