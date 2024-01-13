@@ -1,10 +1,10 @@
-﻿using SharpVE.Core.World.Chunk;
+﻿using SharpVE.Core.World.Chunks;
 using System.Collections.Generic;
 
 namespace SharpVE.Core.World
 {
     public class World
     {
-        public List<IChunkData> Chunks { get; set; } = new List<IChunkData>();
+        public List<Chunk> Chunks { get; set; } = new List<Chunk>();
     }
 }
