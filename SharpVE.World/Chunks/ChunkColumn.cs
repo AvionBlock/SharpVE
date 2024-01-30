@@ -1,7 +1,6 @@
-﻿using SharpVE.Core.World.Chunks;
-using System;
+﻿using System;
 
-namespace SharpVE.Core.World.Chunks
+namespace SharpVE.World.Chunks
 {
     public class ChunkColumn
     {
@@ -16,7 +15,7 @@ namespace SharpVE.Core.World.Chunks
         public ChunkColumn()
         {
             if (COLUMN_HEIGHT % CHUNK_HEIGHT != 0)
-                throw new Exception("COLUMN_HEIGHT is not divisible by CHUNK_HEIGHT");
+                throw new Exception($"{nameof(COLUMN_HEIGHT)} is not divisible by {nameof(CHUNK_HEIGHT)}");
 
             SubChunks = new SubChunk[CHUNK_HEIGHT / CHUNK_HEIGHT];
         }

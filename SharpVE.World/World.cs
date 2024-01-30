@@ -1,7 +1,7 @@
-﻿using SharpVE.Core.World.Chunks;
+﻿using SharpVE.World.Chunks;
 using System.Collections.Generic;
 
-namespace SharpVE.Core.World
+namespace SharpVE.World
 {
     public class World
     {

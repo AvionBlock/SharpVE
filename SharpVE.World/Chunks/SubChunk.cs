@@ -1,4 +1,4 @@
-﻿namespace SharpVE.Core.World.Chunks
+﻿namespace SharpVE.World.Chunks
 {
     public class SubChunk
     {
