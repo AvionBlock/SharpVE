@@ -1,30 +1,38 @@
 ﻿using SharpVE.Core.Blocks;
 using SharpVE.Core.Interfaces.Chunks;
 using Silk.NET.Maths;
-using System;
 
 namespace SharpVE.World.Chunks
 {
     public class SingleBlockSubChunkData : ISubChunkData
     {
+        private ChunkColumn ChunkColumn;
+        private BlockState BlockState;
+
+        public SingleBlockSubChunkData(ChunkColumn ChunkColumn, BlockState BlockState)
+        {
+            this.ChunkColumn = ChunkColumn;
+            this.BlockState = BlockState;
+        }
+
         public BlockState? GetBlock(int localX, int localY, int localZ)
         {
-            throw new NotImplementedException();
+            return BlockState;
         }
 
         public BlockState? GetBlock(Vector3D<int> localPos)
         {
-            throw new NotImplementedException();
+            return BlockState;
         }
 
         public void SetBlock(int localX, int localY, int localZ, BlockState block)
         {
-            throw new NotImplementedException();
+            BlockState = block;
         }
 
         public void SetBlock(Vector3D<int> localPos, BlockState block)
         {
-            throw new NotImplementedException();
+            BlockState = block;
         }
     }
 }
