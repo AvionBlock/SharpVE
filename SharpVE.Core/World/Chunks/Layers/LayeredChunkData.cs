@@ -8,7 +8,7 @@
         public LayeredChunkData(ChunkData PChunkData)
         {
             this.PChunkData = PChunkData;
-            BlockIds = new ushort[Chunk.CHUNK_WIDTH * Chunk.CHUNK_DEPTH];
+            BlockIds = new ushort[ChunkColumn.CHUNK_WIDTH * ChunkColumn.CHUNK_DEPTH];
         }
     }
 }

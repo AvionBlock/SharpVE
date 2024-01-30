@@ -5,6 +5,6 @@ namespace SharpVE.Core.World
 {
     public class World
     {
-        public List<Chunk> Chunks { get; set; } = new List<Chunk>();
+        public List<ChunkColumn> Chunks { get; set; } = new List<ChunkColumn>();
     }
 }
