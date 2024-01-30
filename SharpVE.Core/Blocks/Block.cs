@@ -1,4 +1,4 @@
-﻿namespace SharpVE.World.Blocks
+﻿namespace SharpVE.Core.Blocks
 {
     public class Block
     {
