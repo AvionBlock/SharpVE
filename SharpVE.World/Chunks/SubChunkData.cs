@@ -9,7 +9,7 @@ namespace SharpVE.World.Chunks
     public class SubChunkData : ISubChunkData
     {
         private Dictionary<ushort, BlockState> BlockStates;
-        private ILayerData?[] Data;
+        private ILayerData[]? Data;
 
         public SubChunkData()
         {

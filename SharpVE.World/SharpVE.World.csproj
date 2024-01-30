@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Chunks\Layers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SharpVE.Core\SharpVE.Core.csproj" />
   </ItemGroup>
 
