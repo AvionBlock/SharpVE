@@ -6,6 +6,13 @@ namespace SharpVE.World.Chunks.Layers
 {
     public class LayerData : ILayerData
     {
+        private SubChunkData SubChunkData;
+        
+        public LayerData(SubChunkData SubChunkData)
+        {
+            this.SubChunkData = SubChunkData;
+        }
+
         public ushort GetBlock(int localX, int localZ)
         {
             throw new NotImplementedException();

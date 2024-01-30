@@ -10,7 +10,8 @@ namespace SharpVE.World.Chunks
         public SubChunk(ChunkColumn ChunkColumn)
         {
             this.ChunkColumn = ChunkColumn;
-            Data = new SingleBlockSubChunkData();
+            //TEMPORARY
+            Data = new SingleBlockSubChunkData(this, new Core.Blocks.BlockState());
         }
     }
 }

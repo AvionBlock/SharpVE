@@ -5,12 +5,12 @@ namespace SharpVE.World.Chunks.Layers
 {
     public class SingleBlockLayerData : ILayerData
     {
-        private SubChunk SubChunk;
+        private SubChunkData SubChunkData;
         private ushort BlockId;
 
-        public SingleBlockLayerData(SubChunk SubChunk, ushort BlockId = 0)
+        public SingleBlockLayerData(SubChunkData SubChunkData, ushort BlockId = 0)
         {
-            this.SubChunk = SubChunk;
+            this.SubChunkData = SubChunkData;
             this.BlockId = BlockId;
         }
 

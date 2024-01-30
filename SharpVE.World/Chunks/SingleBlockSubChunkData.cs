@@ -6,12 +6,12 @@ namespace SharpVE.World.Chunks
 {
     public class SingleBlockSubChunkData : ISubChunkData
     {
-        private ChunkColumn ChunkColumn;
+        private SubChunk SubChunk;
         private BlockState BlockState;
 
-        public SingleBlockSubChunkData(ChunkColumn ChunkColumn, BlockState BlockState)
+        public SingleBlockSubChunkData(SubChunk SubChunk, BlockState BlockState)
         {
-            this.ChunkColumn = ChunkColumn;
+            this.SubChunk = SubChunk;
             this.BlockState = BlockState;
         }
 

@@ -8,13 +8,13 @@ namespace SharpVE.World.Chunks
 {
     public class SubChunkData : ISubChunkData
     {
-        private ChunkColumn ChunkColumn;
+        private SubChunk SubChunk;
         private Dictionary<ushort, BlockState> BlockStates;
         private ILayerData?[] Data;
 
-        public SubChunkData(ChunkColumn ChunkColumn)
+        public SubChunkData(SubChunk SubChunk)
         {
-            this.ChunkColumn = ChunkColumn;
+            this.SubChunk = SubChunk;
             BlockStates = new Dictionary<ushort, BlockState>();
             Data = new ILayerData[ChunkColumn.CHUNK_HEIGHT];
         }
