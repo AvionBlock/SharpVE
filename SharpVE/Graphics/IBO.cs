@@ -5,8 +5,7 @@ namespace SharpVE.Graphics
 {
     public class IBO
     {
-        public uint ID { get; private set; }
-
+        private uint ID;
         protected readonly GL GraphicsInstance;
 
         public IBO(GL gl)
