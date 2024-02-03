@@ -14,7 +14,7 @@ namespace SharpVE.World.Chunks
         public const ushort MIN_Y = 0;
 
         public Vector2D<int> ChunkCoordinates { get; private set; }
-        private SubChunk[]? SubChunks;
+        private SubChunk?[] SubChunks;
 
         public ChunkColumn(Vector2D<int> ChunkCoordinates)
         {
@@ -24,6 +24,24 @@ namespace SharpVE.World.Chunks
                 throw new Exception($"{nameof(COLUMN_HEIGHT)} is not divisible by {nameof(CHUNK_HEIGHT)}");
 
             SubChunks = new SubChunk[CHUNK_HEIGHT / CHUNK_HEIGHT];
+        }
+
+        public void AddOrReplaceSubChunk(SubChunk subChunk)
+        {
+            //INCORRECT
+            SubChunks[subChunk.YLevel] = subChunk;
+        }
+
+        public SubChunk? GetSubChunk(int globalY)
+        {
+            var yLevel = (int)MathF.Floor(globalY / CHUNK_HEIGHT);
+            return SubChunks[yLevel];
+        }
+
+        public void RemoveSubChunk(int globalY)
+        {
+            var yLevel = (int)MathF.Floor(globalY / CHUNK_HEIGHT);
+            SubChunks[yLevel] = null;
         }
 
         public void SetBlock(int localX, int localY, int localZ, BlockState block)

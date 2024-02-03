@@ -9,9 +9,12 @@ namespace SharpVE.World
 {
     public class World
     {
-        private List<ChunkColumn> Chunks { get; set; } = new List<ChunkColumn>();
+        private List<ChunkColumn> Chunks { get; set; }
 
-        public World() { }
+        public World()
+        {
+            Chunks = new List<ChunkColumn>();
+        }
 
         public void AddChunk(ChunkColumn chunk)
         {
@@ -45,12 +48,10 @@ namespace SharpVE.World
             var localX = globalX % ChunkColumn.CHUNK_WIDTH;
             if (localX < 0) localX += ChunkColumn.CHUNK_WIDTH;
 
-            var localY = globalY - ChunkColumn.MIN_Y;
-
             var localZ = globalX % ChunkColumn.CHUNK_DEPTH;
             if (localZ < 0) localZ += ChunkColumn.CHUNK_DEPTH;
 
-            chunkColumn.SetBlock(localX, localY, localZ, block);
+            chunkColumn.SetBlock(localX, globalY, localZ, block);
         }
 
         public void SetBlock(Vector3D<int> globalPos, BlockState block)
@@ -67,12 +68,10 @@ namespace SharpVE.World
             var localX = globalX % ChunkColumn.CHUNK_WIDTH;
             if (localX < 0) localX += ChunkColumn.CHUNK_WIDTH;
 
-            var localY = globalY - ChunkColumn.MIN_Y;
-
             var localZ = globalX % ChunkColumn.CHUNK_DEPTH;
             if (localZ < 0) localZ += ChunkColumn.CHUNK_DEPTH;
 
-            return chunkColumn.GetBlock(localX, localY, localZ);
+            return chunkColumn.GetBlock(localX, globalY, localZ);
         }
 
         public BlockState? GetBlock(Vector3D<int> globalPos)
