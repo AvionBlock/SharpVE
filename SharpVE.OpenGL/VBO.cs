@@ -18,10 +18,6 @@ namespace SharpVE.OpenGL
             ID = GraphicsInstance.GenBuffer();
         }
 
-        /// <summary>
-        /// Sets the 3D data of the VBO. Used for creating meshes or normals.
-        /// </summary>
-        /// <param name="data"></param>
         public void SetData(List<Vector3D<float>> data)
         {
             var span = new Span<Vector3D<float>>(data.ToArray());
@@ -32,10 +28,6 @@ namespace SharpVE.OpenGL
             Unbind();
         }
 
-        /// <summary>
-        /// Sets the 2D data of the VBO. Used for defining a texture.
-        /// </summary>
-        /// <param name="data"></param>
         public void SetData(List<Vector2D<float>> data)
         {
             var span = new Span<Vector2D<float>>(data.ToArray());
@@ -46,25 +38,16 @@ namespace SharpVE.OpenGL
             Unbind();
         }
 
-        /// <summary>
-        /// Binds the buffer.
-        /// </summary>
         public void Bind()
         {
             GraphicsInstance.BindBuffer(BufferTargetARB.ArrayBuffer, ID);
         }
 
-        /// <summary>
-        /// Unbinds the buffer.
-        /// </summary>
         public void Unbind()
         {
             GraphicsInstance.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
         }
 
-        /// <summary>
-        /// Deletes the VBO. Use this for disposing/cleaning up resources.
-        /// </summary>
         public void Delete()
         {
             GraphicsInstance.DeleteBuffer(ID);
