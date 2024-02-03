@@ -3,22 +3,21 @@ using SharpVE.World.Chunks;
 using Silk.NET.Maths;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SharpVE.World
 {
     public class World
     {
-        private List<ChunkColumn> Chunks { get; set; }
+        private Dictionary<Vector2D<int>, ChunkColumn> Chunks { get; set; }
 
         public World()
         {
-            Chunks = new List<ChunkColumn>();
+            Chunks = new Dictionary<Vector2D<int>, ChunkColumn>();
         }
 
         public void AddChunk(ChunkColumn chunk)
         {
-            Chunks.Add(chunk);
+            Chunks.Add(chunk.ChunkCoordinates, chunk);
         }
 
         public ChunkColumn GetChunk(int globalX, int globalZ)
@@ -28,15 +27,15 @@ namespace SharpVE.World
             var zCoord = (int)MathF.Floor(globalZ / ChunkColumn.CHUNK_DEPTH);
 
             //Get the chunk column.
-            var chunkColumn = Chunks.FirstOrDefault(x => x.ChunkCoordinates.X == xCoord && x.ChunkCoordinates.Y == zCoord);
+            Chunks.TryGetValue(new Vector2D<int>(xCoord, zCoord), out var chunkColumn);
             if(chunkColumn == null) throw new Exception($"Chunk at X: {xCoord}, Z: {zCoord} does not exist or is not loaded!");
 
             return chunkColumn;
         }
 
-        public void RemoveChunk(ChunkColumn chunk)
+        public void RemoveChunk(Vector2D<int> globalPos)
         {
-            Chunks.Remove(chunk);
+            Chunks.Remove(globalPos);
         }
 
         public void SetBlock(int globalX, int globalY, int globalZ, BlockState block)
