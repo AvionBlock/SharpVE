@@ -18,6 +18,19 @@ namespace SharpVE.World
             Chunks.Add(chunk);
         }
 
+        public ChunkColumn GetChunk(int globalX, int globalZ)
+        {
+            //Calculate the X and Z coord of the chunk column from the global position.
+            var xCoord = (int)MathF.Floor(globalX / ChunkColumn.CHUNK_WIDTH);
+            var zCoord = (int)MathF.Floor(globalZ / ChunkColumn.CHUNK_DEPTH);
+
+            //Get the chunk column.
+            var chunkColumn = Chunks.FirstOrDefault(x => x.ChunkCoordinates.X == xCoord && x.ChunkCoordinates.Y == zCoord);
+            if(chunkColumn == null) throw new Exception($"Chunk at X: {xCoord}, Z: {zCoord} does not exist or is not loaded!");
+
+            return chunkColumn;
+        }
+
         public void RemoveChunk(ChunkColumn chunk)
         {
             Chunks.Remove(chunk);
@@ -25,7 +38,19 @@ namespace SharpVE.World
 
         public void SetBlock(int globalX, int globalY, int globalZ, BlockState block)
         {
+            //Get the chunk column.
+            var chunkColumn = GetChunk(globalX, globalZ);
 
+            //Convert global to local position.
+            var localX = globalX % ChunkColumn.CHUNK_WIDTH;
+            if (localX < 0) localX += ChunkColumn.CHUNK_WIDTH;
+
+            var localY = globalY - ChunkColumn.MIN_Y;
+
+            var localZ = globalX % ChunkColumn.CHUNK_DEPTH;
+            if (localZ < 0) localZ += ChunkColumn.CHUNK_DEPTH;
+
+            chunkColumn.SetBlock(localX, localY, localZ, block);
         }
 
         public void SetBlock(Vector3D<int> globalPos, BlockState block)
@@ -35,10 +60,19 @@ namespace SharpVE.World
 
         public BlockState? GetBlock(int globalX, int globalY, int globalZ)
         {
-            var chunkColumn = Chunks.FirstOrDefault(x => x.ChunkCoordinates.X == MathF.Floor(globalX) && x.ChunkCoordinates.Y == MathF.Floor(globalZ));
-            if(chunkColumn == null) return null;
+            //Get the chunk column.
+            var chunkColumn = GetChunk(globalX, globalZ);
 
+            //Convert global to local position.
+            var localX = globalX % ChunkColumn.CHUNK_WIDTH;
+            if (localX < 0) localX += ChunkColumn.CHUNK_WIDTH;
 
+            var localY = globalY - ChunkColumn.MIN_Y;
+
+            var localZ = globalX % ChunkColumn.CHUNK_DEPTH;
+            if (localZ < 0) localZ += ChunkColumn.CHUNK_DEPTH;
+
+            return chunkColumn.GetBlock(localX, localY, localZ);
         }
 
         public BlockState? GetBlock(Vector3D<int> globalPos)

@@ -11,6 +11,7 @@ namespace SharpVE.World.Chunks
         public const ushort CHUNK_DEPTH = 16;
         public const ushort CHUNK_HEIGHT = 16;
         public const ushort COLUMN_HEIGHT = 256;
+        public const ushort MIN_Y = 0;
 
         public Vector2D<int> ChunkCoordinates { get; private set; }
         private SubChunk[]? SubChunks;
