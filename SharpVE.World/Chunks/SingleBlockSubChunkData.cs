@@ -7,9 +7,9 @@ namespace SharpVE.World.Chunks
     public class SingleBlockSubChunkData : ISubChunkData
     {
         private SubChunk SubChunk;
-        private BlockState BlockState;
+        private BlockState? BlockState;
 
-        public SingleBlockSubChunkData(SubChunk SubChunk, BlockState BlockState)
+        public SingleBlockSubChunkData(SubChunk SubChunk, BlockState? BlockState = null)
         {
             this.SubChunk = SubChunk;
             this.BlockState = BlockState;

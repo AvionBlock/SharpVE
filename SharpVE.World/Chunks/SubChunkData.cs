@@ -22,13 +22,11 @@ namespace SharpVE.World.Chunks
         public BlockState? GetBlock(int localX, int localY, int localZ)
         {
             var layer = Data[localY];
-            if(layer != null)
-            {
-                var blockId = layer.GetBlock(localX, localZ);
-                BlockStates.TryGetValue(blockId, out var blockState);
-                return blockState;
-            }
-            return null;
+            if (layer == null) return null;
+
+            var blockId = layer.GetBlock(localX, localZ);
+            BlockStates.TryGetValue(blockId, out var blockState);
+            return blockState;
         }
 
         public BlockState? GetBlock(Vector3D<int> localPos)
