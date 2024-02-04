@@ -1,6 +1,4 @@
-﻿using SharpVE.Blocks;
-
-namespace SharpVE.Registries
+﻿namespace SharpVE.Registries
 {
     public class BlockRegistry
     {
