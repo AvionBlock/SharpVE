@@ -27,7 +27,7 @@ namespace SharpVE.World.Chunks.Layers
 
         public void SetBlock(int localX, int localZ, ushort blockId)
         {
-            var id = localX + localZ * ChunkColumn.CHUNK_DEPTH;
+            var id = localX * ChunkColumn.CHUNK_WIDTH + localZ;
             Data[id] = blockId;
         }
 
