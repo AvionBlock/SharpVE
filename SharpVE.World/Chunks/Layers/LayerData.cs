@@ -1,6 +1,5 @@
 ﻿using SharpVE.Core.Interfaces.Chunks.Layers;
 using Silk.NET.Maths;
-using System;
 
 namespace SharpVE.World.Chunks.Layers
 {
@@ -17,22 +16,24 @@ namespace SharpVE.World.Chunks.Layers
 
         public ushort GetBlock(int localX, int localZ)
         {
-            throw new NotImplementedException();
+            var id = localX + localZ * ChunkColumn.CHUNK_DEPTH;
+            return Data[id]; 
         }
 
         public ushort GetBlock(Vector2D<int> localPos)
         {
-            throw new NotImplementedException();
+            return GetBlock(localPos.X, localPos.Y);
         }
 
         public void SetBlock(int localX, int localZ, ushort blockId)
         {
-            throw new NotImplementedException();
+            var id = localX + localZ * ChunkColumn.CHUNK_DEPTH;
+            Data[id] = blockId;
         }
 
         public void SetBlock(Vector2D<int> localPos, ushort blockId)
         {
-            throw new NotImplementedException();
+            SetBlock(localPos.X, localPos.Y, blockId);
         }
     }
 }
