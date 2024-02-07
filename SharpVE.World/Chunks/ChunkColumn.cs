@@ -39,10 +39,17 @@ namespace SharpVE.World.Chunks
             SubChunks[yIndex] = subChunk;
         }
 
-        public SubChunk? GetSubChunk(int globalY)
+        public SubChunk GetOrCreateSubChunk(int globalY)
         {
             var yLevel = (int)MathF.Floor(globalY / CHUNK_HEIGHT);
-            return SubChunks[yLevel];
+            var subChunk = SubChunks[yLevel];
+            if (subChunk == null)
+            {
+                subChunk = new SubChunk(this, (sbyte)yLevel);
+                AddOrReplaceSubChunk(subChunk);
+            }
+
+            return subChunk;
         }
 
         public void RemoveSubChunk(int globalY)
@@ -53,14 +60,9 @@ namespace SharpVE.World.Chunks
 
         public void SetBlock(int localX, int globalY, int localZ, BlockState block)
         {
-            var subChunk = GetSubChunk(globalY);
-            if (subChunk == null)
-            {
-                subChunk = new SubChunk(this, (sbyte)MathF.Floor(globalY / CHUNK_HEIGHT));
-                AddOrReplaceSubChunk(subChunk); 
-            }
+            var subChunk = GetOrCreateSubChunk(globalY);
 
-            var localY = globalY - (CHUNK_HEIGHT * subChunk.YLevel); //IK BODMAS APPLIES BUT IDK!
+            var localY = globalY - (CHUNK_HEIGHT * subChunk.YLevel);
             subChunk.SetBlock(localX, localY, localZ, block);
         }
 
@@ -71,10 +73,9 @@ namespace SharpVE.World.Chunks
 
         public BlockState? GetBlock(int localX, int globalY, int localZ)
         {
-            var subChunk = GetSubChunk(globalY);
-            if (subChunk == null) return null;
+            var subChunk = GetOrCreateSubChunk(globalY);
 
-            var localY = globalY - (CHUNK_HEIGHT * subChunk.YLevel); //IK BODMAS APPLIES BUT IDK!
+            var localY = globalY - (CHUNK_HEIGHT * subChunk.YLevel);
             return subChunk.GetBlock(localX, localY, localZ);
         }
 
