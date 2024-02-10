@@ -1,4 +1,9 @@
-﻿namespace SharpVE.Registries
+﻿using SharpVE.Core.Blocks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace SharpVE.Core.Registries
 {
     public class BlockRegistry
     {

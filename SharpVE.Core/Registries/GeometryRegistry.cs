@@ -1,4 +1,4 @@
-﻿namespace SharpVE.Registries
+﻿namespace SharpVE.Core.Registries
 {
     public class GeometryRegistry
     {

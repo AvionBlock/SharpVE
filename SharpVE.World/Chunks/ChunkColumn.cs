@@ -16,11 +16,12 @@ namespace SharpVE.World.Chunks
         public const int MIN_Y = 0;
 
         public Vector2D<int> ChunkCoordinates { get; private set; }
+        public readonly World World;
         private SubChunk?[] SubChunks;
         private int MIN_Y_LEVEL;
         private int MAX_Y_LEVEL;
 
-        public ChunkColumn(Vector2D<int> ChunkCoordinates)
+        public ChunkColumn(Vector2D<int> ChunkCoordinates, World World)
         {
             this.ChunkCoordinates = ChunkCoordinates;
 
@@ -28,6 +29,7 @@ namespace SharpVE.World.Chunks
             MAX_Y_LEVEL = (int)MathF.Ceiling(MAX_Y / CHUNK_HEIGHT);
 
             SubChunks = new SubChunk[COLUMN_HEIGHT / CHUNK_HEIGHT];
+            this.World = World;
         }
 
         public void AddOrReplaceSubChunk(SubChunk subChunk)

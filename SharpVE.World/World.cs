@@ -1,4 +1,5 @@
 ﻿using SharpVE.Core.Blocks;
+using SharpVE.Core.Registries;
 using SharpVE.World.Chunks;
 using Silk.NET.Maths;
 using System;
@@ -8,11 +9,13 @@ namespace SharpVE.World
 {
     public class World
     {
-        private Dictionary<Vector2D<int>, ChunkColumn> Chunks { get; set; }
+        public BlockRegistry Blocks { get; set; }
+        private Dictionary<Vector2D<int>, ChunkColumn> Chunks;
 
         public World()
         {
             Chunks = new Dictionary<Vector2D<int>, ChunkColumn>();
+            Blocks = new BlockRegistry();
         }
 
         public void AddChunk(ChunkColumn chunk)

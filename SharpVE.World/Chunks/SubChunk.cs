@@ -19,6 +19,8 @@ namespace SharpVE.World.Chunks
             BlockStates = new BlockStorage();
             Data = new SingleBlockSubChunkData(this);
             YLevel = yLevel;
+
+            BlockStates.AddBlockState(ChunkColumn.World.Blocks.DefaultBlock.GetBlockState());
         }
 
         public void SetBlock(int localX, int localY, int localZ, BlockState block)
