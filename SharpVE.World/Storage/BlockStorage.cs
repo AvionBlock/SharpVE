@@ -18,7 +18,7 @@ namespace SharpVE.World.Storage
         {
             if (BlockStates.ContainsValue(block)) throw new Exception("Blockstate already exists!");
 
-            var blockId = BlockStates.Keys.Min(); //Get the lowest available key
+            var blockId = FindLowestAvailableKey(); //Get the lowest available key
             BlockStates.Add(blockId, block);
             return blockId;
         }
@@ -39,6 +39,15 @@ namespace SharpVE.World.Storage
         public void RemoveBlockState(ushort blockId)
         {
             BlockStates.Remove(blockId);
+        }
+
+        private ushort FindLowestAvailableKey()
+        {
+            for(ushort i = 0; i < BlockStates.Count; i++)
+            {
+                if (!BlockStates.ContainsKey(i)) return i;
+            }
+            return 0;
         }
     }
 }
