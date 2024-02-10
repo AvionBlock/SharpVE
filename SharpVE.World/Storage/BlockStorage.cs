@@ -18,7 +18,7 @@ namespace SharpVE.World.Storage
         {
             if (BlockStates.ContainsValue(block)) throw new Exception("Blockstate already exists!");
 
-            var blockId = BlockStates.Keys.Min();
+            var blockId = BlockStates.Keys.Min(); //Get the lowest available key
             BlockStates.Add(blockId, block);
             return blockId;
         }
@@ -30,7 +30,7 @@ namespace SharpVE.World.Storage
             return blockState.Key;
         }
 
-        public BlockState TryGetBlockState(ushort blockId)
+        public BlockState? TryGetBlockState(ushort blockId)
         {
             BlockStates.TryGetValue(blockId, out var state);
             return state;
