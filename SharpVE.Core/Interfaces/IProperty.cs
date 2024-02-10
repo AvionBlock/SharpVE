@@ -1,4 +1,4 @@
-﻿namespace SharpVE.Interfaces
+﻿namespace SharpVE.Core.Interfaces
 {
     public interface IProperty
     {
