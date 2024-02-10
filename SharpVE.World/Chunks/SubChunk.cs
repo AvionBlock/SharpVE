@@ -29,7 +29,7 @@ namespace SharpVE.World.Chunks
                 if (blockState?.Equals(block) ?? false) return;
 
                 Data = new SubChunkData(this);
-                ushort blockId = 0;
+                ushort blockId;
                 try
                 {
                     blockId = BlockStates.AddBlockState(block);
@@ -42,7 +42,7 @@ namespace SharpVE.World.Chunks
             }
             else if(Data is SubChunkData)
             {
-                ushort blockId = 0;
+                ushort blockId;
                 try
                 {
                     blockId = BlockStates.AddBlockState(block);
@@ -64,7 +64,7 @@ namespace SharpVE.World.Chunks
 
         public BlockState? GetBlock(int localX, int localY, int localZ)
         {
-            return BlockStates.TryGetBlockState(Data.GetBlock(0, 0, 0));
+            return BlockStates.TryGetBlockState(Data.GetBlock(localX, localY, localZ));
         }
 
         public BlockState? GetBlock(Vector3D<int> localPos)

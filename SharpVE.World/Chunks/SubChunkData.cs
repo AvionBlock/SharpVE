@@ -17,7 +17,6 @@ namespace SharpVE.World.Chunks
             Data = new ILayerData[ChunkColumn.CHUNK_HEIGHT];
         }
 
-        #region LayerSetters
         public void AddOrReplaceLayer(ILayerData layer, int yLayer)
         {
             if (yLayer > ChunkColumn.CHUNK_HEIGHT)
@@ -39,11 +38,10 @@ namespace SharpVE.World.Chunks
         {
             Data[yLayer] = null;
         }
-        #endregion
 
-        #region BlockSetters
         public ushort GetBlock(int localX, int localY, int localZ)
         {
+            if (!CoordinateIsValid(localX, localY, localZ)) return 0;
             var layer = Data[localY];
             if (layer == null) return 0;
 
@@ -57,6 +55,7 @@ namespace SharpVE.World.Chunks
 
         public void SetBlock(int localX, int localY, int localZ, ushort blockId)
         {
+            if (!CoordinateIsValid(localX, localY, localZ)) return;
             var layer = GetOrCreateLayer(localY);
             if (layer is SingleBlockLayerData)
             {
@@ -70,6 +69,11 @@ namespace SharpVE.World.Chunks
         {
             SetBlock(localPos.X, localPos.Y, localPos.Z, blockId);
         }
-        #endregion
+
+        private bool CoordinateIsValid(int localX, int localY, int localZ)
+        {
+            if (localX < 0 || localY < 0 || localZ < 0 || localX >= ChunkColumn.CHUNK_WIDTH || localY >= ChunkColumn.CHUNK_HEIGHT || localZ >= ChunkColumn.CHUNK_DEPTH) return false;
+            return true;
+        }
     }
 }

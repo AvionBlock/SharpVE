@@ -16,6 +16,7 @@ namespace SharpVE.World.Chunks
 
         public ushort GetBlock(int localX, int localY, int localZ)
         {
+            if(!CoordinateIsValid(localX, localY, localZ)) return 0;
             return BlockId;
         }
 
@@ -26,12 +27,19 @@ namespace SharpVE.World.Chunks
 
         public void SetBlock(int localX, int localY, int localZ, ushort blockId)
         {
+            if (!CoordinateIsValid(localX, localY, localZ)) return;
             BlockId = blockId;
         }
 
         public void SetBlock(Vector3D<int> localPos, ushort blockId)
         {
             BlockId = blockId;
+        }
+
+        private bool CoordinateIsValid(int localX, int localY, int localZ)
+        {
+            if (localX < 0 || localY < 0 || localZ < 0 || localX >= ChunkColumn.CHUNK_WIDTH || localY >= ChunkColumn.CHUNK_HEIGHT || localZ >= ChunkColumn.CHUNK_DEPTH) return false;
+            return true;
         }
     }
 }
