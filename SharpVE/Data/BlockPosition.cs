@@ -29,5 +29,52 @@
             Y = y;
             Z = z;
         }
+
+        /// <summary>
+        /// Converts the global block position to a local position depending on chunk size.
+        /// </summary>
+        /// <param name="chunkSize">The chunk size (subchunk size).</param>
+        /// <returns>The local block position.</returns>
+        public BlockPosition GetLocalPosition(ushort chunkSize)
+        {
+            var localX = X % chunkSize;
+            var localY = Y % chunkSize;
+            var localZ = Z % chunkSize;
+
+            if (localX < 0) localX += chunkSize;
+            if (localY < 0) localY += chunkSize;
+            if (localZ < 0) localZ += chunkSize;
+
+            return new BlockPosition(localX, localY, localZ);
+        }
+
+        /// <summary>
+        /// Converts the global block position to a local position on the X and Z axis depending on chunk size.
+        /// </summary>
+        /// <param name="chunkSize">The chunk size (subchunk size).</param>
+        /// <returns>The horizontal local block position.</returns>
+        public BlockPosition GetLocalHorizontalPosition(ushort chunkSize)
+        {
+            var localX = X % chunkSize;
+            var localZ = Z % chunkSize;
+
+            if (localX < 0) localX += chunkSize;
+            if (localZ < 0) localZ += chunkSize;
+
+            return new BlockPosition(localX, Y, localZ);
+        }
+
+        /// <summary>
+        /// Converts the global block position to a local position on the Y axis depending on chunk size.
+        /// </summary>
+        /// <param name="chunkSize">The chunk size (subchunk size).</param>
+        /// <returns>The vertical local block position.</returns>
+        public BlockPosition GetLocalVerticalPosition(ushort chunkSize)
+        {
+            var localY = Y % chunkSize;
+
+            if(localY < 0) localY += chunkSize;
+            return new BlockPosition(X, localY, Z);
+        }
     }
 }

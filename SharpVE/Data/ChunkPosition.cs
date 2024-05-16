@@ -33,7 +33,7 @@ namespace SharpVE.Data
         /// </summary>
         /// <param name="blockPosition">The block position.</param>
         /// <param name="chunkSize">The chunk size in blocks on one side.</param>
-        /// <returns></returns>
+        /// <returns>The chunk position that the block is in.</returns>
         public static ChunkPosition FromBlockPosition(BlockPosition blockPosition, ushort chunkSize)
         {
             //Calculate the X and Z coord of the chunk column from the global position.
