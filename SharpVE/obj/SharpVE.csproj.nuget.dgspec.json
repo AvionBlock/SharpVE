@@ -1,37 +1,38 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\flyin\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj": {}
+    "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\flyin\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj": {
+    "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\flyin\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj",
+        "projectUniqueName": "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj",
         "projectName": "SharpVE",
-        "projectPath": "C:\\Users\\flyin\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj",
-        "packagesPath": "C:\\Users\\flyin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\flyin\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\obj\\",
+        "projectPath": "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj",
+        "packagesPath": "C:\\Users\\Asuka Woods\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\flyin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Asuka Woods\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "netstandard2.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\VSProject\\local-nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
             "projectReferences": {}
           }
         },
@@ -39,17 +40,16 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
-          "dependencies": {
-            "Silk.NET": {
-              "target": "Package",
-              "version": "[2.19.0, )"
-            }
-          },
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
           "imports": [
             "net461",
             "net462",
@@ -62,11 +62,11 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.NETCore.App": {
+            "NETStandard.Library": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

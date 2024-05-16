@@ -1,6 +1,0 @@
-﻿namespace SharpVE.Core.Registries
-{
-    public class EntityRegistry
-    {
-    }
-}
