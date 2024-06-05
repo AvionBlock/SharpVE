@@ -87,7 +87,7 @@
                     return;
                 }
 
-                var layer = new ShortLayeredChunk();
+                var layer = new ShortLayeredChunk<T>(subChunk, this, localY);
                 layer.SetBlockState(subChunk, blockState, localX, localY, localZ);
                 subChunk.SetLayer(localY, layer);
                 return;

@@ -33,6 +33,24 @@
             }
         }
 
+        /// <summary>
+        /// Creates a new <see cref="ShortLayeredChunk{T}"/> that is the size of a <see cref="short"/> for each block ID from a <see cref="ByteLayeredChunk{T}"/>.
+        /// </summary>
+        /// <param name="subChunk">The subchunk to set the blockStates to.</param>
+        /// <param name="byteLayeredChunk">The layer to convert from.</param>
+        /// <param name="localY">The local Y layer of this layer to set in the subChunk.</param>
+        public ShortLayeredChunk(SubChunk<T> subChunk, ByteLayeredChunk<T> byteLayeredChunk, int localY)
+        {
+            BlockIDs = new short[SubChunk<T>.SIZE * SubChunk<T>.SIZE];
+            for (int x = 0; x < SubChunk<T>.SIZE; x++)
+            {
+                for (int z = 0; z < SubChunk<T>.SIZE; z++)
+                {
+                    SetBlockState(subChunk, byteLayeredChunk.GetBlockState(subChunk, x, z), x, localY, z);
+                }
+            }
+        }
+
         //Getters
         /// <summary>
         /// Gets a <see cref="BlockState"/> in the layer.
