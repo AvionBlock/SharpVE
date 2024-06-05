@@ -1,8 +1,5 @@
 ﻿using SharpVE.Chunks;
 using SharpVE.Data;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace SharpVE.World.Chunks
 {
@@ -19,7 +16,7 @@ namespace SharpVE.World.Chunks
         /// <summary>
         /// The subchunks/sections that make up the chunk column.
         /// </summary>
-        public SubChunk[] SubChunks { get; private set; } 
+        public SubChunk<T>[] SubChunks { get; private set; } 
 
         /// <summary>
         /// Constructs a new chunk column.
@@ -33,21 +30,6 @@ namespace SharpVE.World.Chunks
         {
             var chunkColumnHeight = maxY - minY;
             Position = new ChunkPosition(x, y);
-            SubChunks = new SubChunk[(int)MathF.Ceiling(chunkColumnHeight / SubChunk.SIZE)];
-
-            for(int i = 0; i < SubChunks.Length; i++)
-            {
-                SubChunks[i] = new SubChunk(); //Will change to fill subchunk function!
-            }
-        }
-
-        public void GetBlock(BlockPosition blockPosition)
-        {
-        }
-
-        public void SetBlock(BlockPosition blockPosition)
-        {
-            var local = blockPosition.GetLocalVerticalPosition(SubChunk.SIZE);
         }
     }
 }

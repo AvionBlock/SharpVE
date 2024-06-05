@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj": {}
+    "C:\\Users\\Asuka Woods\\Source\\Repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj": {
+    "C:\\Users\\Asuka Woods\\Source\\Repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj",
+        "projectUniqueName": "C:\\Users\\Asuka Woods\\Source\\Repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj",
         "projectName": "SharpVE",
-        "projectPath": "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj",
+        "projectPath": "C:\\Users\\Asuka Woods\\Source\\Repos\\AvionBlock\\SharpVE\\SharpVE\\SharpVE.csproj",
         "packagesPath": "C:\\Users\\Asuka Woods\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asuka Woods\\source\\repos\\AvionBlock\\SharpVE\\SharpVE\\obj\\",
+        "outputPath": "C:\\Users\\Asuka Woods\\Source\\Repos\\AvionBlock\\SharpVE\\SharpVE\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
