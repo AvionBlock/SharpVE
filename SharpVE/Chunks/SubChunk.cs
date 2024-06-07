@@ -101,7 +101,7 @@ namespace SharpVE.Chunks
             }
             else
             {
-                //Shared single layer chunk.
+                Layers[localY] = SharedLayeredChunk<T>.GetOrAdd(this, blockState);
             }
 
             for(int i = 0; i < SIZE; i++)
