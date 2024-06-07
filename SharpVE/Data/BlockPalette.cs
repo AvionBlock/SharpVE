@@ -1,15 +1,23 @@
-﻿namespace SharpVE.Data
+﻿using System;
+
+namespace SharpVE.Data
 {
     public class BlockPalette<T>
     {
         public T[] BlockStates;
-        public int Size;
+
+        public BlockPalette(int defaultSize)
+        {
+            BlockStates = new T[defaultSize];
+        }
 
         public void Add(T blockState)
         { }
 
-        public void Get(int blockId)
-        { }
+        public T Get(int blockId)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool Has(T blockState)
         {

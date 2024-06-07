@@ -1,4 +1,6 @@
-﻿namespace SharpVE.Chunks.Layers
+﻿using System.Collections.Generic;
+
+namespace SharpVE.Chunks.Layers
 {
     public class ShortLayeredChunk<T>
     {
@@ -104,7 +106,7 @@
             }
 
             T oldBlock = GetBlockState(subChunk, localX, localZ);
-            if (blockState != oldBlock)
+            if (!EqualityComparer<T>.Default.Equals(oldBlock, blockState))
             {
                 var idx = localX + (localZ * SubChunk<T>.SIZE);
                 BlockIDs[idx] = (short)fullId;
