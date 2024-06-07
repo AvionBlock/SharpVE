@@ -102,7 +102,7 @@ namespace SharpVE.Chunks.Layers
             var fullId = subChunk.GetBlockStateID(blockState);
             if (fullId > SubChunk<T>.NUM_OF_BLOCKS - 1)
             {
-                subChunk.BlockPalette.Clean();
+                subChunk.CleanPalette();
                 subChunk.SetBlockState(blockState, localX, localY, localZ);
                 return;
             }
