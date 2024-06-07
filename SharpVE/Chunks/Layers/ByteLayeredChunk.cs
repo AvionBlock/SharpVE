@@ -76,7 +76,7 @@ namespace SharpVE.Chunks.Layers
         /// <param name="localZ">The localZ of the layer.</param>
         public void SetBlockState(SubChunk<T> subChunk, T blockState, int localX, int localY, int localZ)
         {
-            if (!subChunk.BlockPalette.Has(blockState))
+            if (!subChunk.BlockPalette.Has(subChunk, blockState))
             {
                 subChunk.BlockPalette.Add(blockState);
             }
@@ -84,7 +84,7 @@ namespace SharpVE.Chunks.Layers
             var fullId = subChunk.GetBlockStateID(blockState);
             if (fullId > 255)
             {
-                subChunk.BlockPalette.Clean();
+                subChunk.CleanPalette();
                 if (subChunk.BlockPalette.Size <= 255) //Probably will change Size to a var.
                 {
                     subChunk.SetBlockState(blockState, localX, localY, localZ);

@@ -13,7 +13,7 @@ namespace SharpVE.Chunks.Layers
         public SingleLayeredChunk(SubChunk<T> subChunk, T blockState)
         {
             BlockState = blockState;
-            if(!subChunk.BlockPalette.Has(blockState))
+            if(!subChunk.BlockPalette.Has(subChunk, blockState))
             {
                 subChunk.BlockPalette.Add(blockState);
             }
@@ -44,7 +44,7 @@ namespace SharpVE.Chunks.Layers
         public virtual void Fill(SubChunk<T> subChunk, T blockState, int localY)
         {
             BlockState = blockState;
-            if(!subChunk.BlockPalette.Has(blockState))
+            if(!subChunk.BlockPalette.Has(subChunk, blockState))
             {
                 subChunk.BlockPalette.Add(blockState);
             }

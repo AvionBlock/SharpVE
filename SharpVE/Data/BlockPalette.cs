@@ -1,4 +1,5 @@
 ﻿using System;
+using SharpVE.Chunks;
 
 namespace SharpVE.Data
 {
@@ -20,6 +21,7 @@ namespace SharpVE.Data
         /// <summary>
         /// Creates a new block palette.
         /// </summary>
+        /// <param name="defaultSize"> The default size to allocate. </param>
         public BlockPalette(int defaultSize)
         {
             BlockStates = new T[defaultSize];
@@ -28,9 +30,10 @@ namespace SharpVE.Data
         /// <summary>
         /// Adds a block state to the block palette. (Does not overwrite same blockstates)
         /// </summary>
+        /// <param name="blockState"> The blockstate to add. </param>
         public void Add(T blockState)
         {
-            if(Size == BlockStates.Length)
+            if (Size == BlockStates.Length)
             {
                 var newSize = (int)(Size * 1.75f);
                 newSize = Math.Max(newSize, Size + 1);
@@ -42,25 +45,32 @@ namespace SharpVE.Data
         }
 
         /// <summary>
-        /// Gets a blockstate from an Id.
+        /// Gets a blockstate from an ID.
         /// </summary>
+        /// <param name="blockId"> The block ID to get the blockstate. </param>
         public T Get(int blockId)
         {
-            throw new NotImplementedException();
-        }
-        
-        /// <summary>
-        /// Checks if the blockstate exists in the palette.
-        /// </summary>
-        public bool Has(T blockState)
-        {
-            return false;
+            return BlockStates[blockId];
         }
 
         /// <summary>
-        /// Clears the block palette.
+        /// Checks if the blockstate exists in the palette.
         /// </summary>
-        public void Clean()
-        { }
+        /// <param name="subChunk"> The subchunk to determine ID. </param>
+        /// <param name="blockState"> The blockstate to get the ID for. </param>
+        public bool Has(SubChunk<T> subChunk, T blockState)
+        {
+            return subChunk.GetBlockStateID(blockState) != -1;
+        }
+
+        /// <summary>
+        /// Copies the values from a block palette and set's it internally.
+        /// </summary>
+        /// <param name="blockPalette"> The <see cref="BlockPalette"/> to copy from. </param>
+        public void CopyFromPalette(BlockPalette<T> blockPalette)
+        {
+            Size = blockPalette.Size;
+            BlockStates = blockPalette.BlockStates;
+        }
     }
 }

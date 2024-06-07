@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using SharpVE.Chunks.Layers;
 using SharpVE.Data;
 using SharpVE.Interfaces;
@@ -11,6 +12,8 @@ namespace SharpVE.Chunks
     /// </summary>
     public class SubChunk<T> : ISubChunk<T>
     {
+        private bool AllowPaletteCleaning = true;
+
         /// <summary>
         /// The size of the subchunk on the X, Y and Z axis's.
         /// </summary>
@@ -30,7 +33,6 @@ namespace SharpVE.Chunks
         /// The layers that make up the subchunk. Each layer contains block data.
         /// </summary>
         public ILayeredChunk<T>[] Layers { get; private set; } = new ILayeredChunk<T>[SIZE];
-
 
         /// <summary>
         /// Creates a new subchunk with a specified default palette size.
@@ -155,7 +157,7 @@ namespace SharpVE.Chunks
         {
             if(layer is SharedLayeredChunk<T> shared)
             {
-                if(!BlockPalette.Has(shared.BlockState))
+                if(!BlockPalette.Has(this, shared.BlockState))
                 {
                     BlockPalette.Add(shared.BlockState);
                 }
@@ -186,6 +188,40 @@ namespace SharpVE.Chunks
         public bool IsAll(T blockState)
         {
             return BlockPalette.Size == 1 && EqualityComparer<T>.Default.Equals(BlockPalette.Get(0), blockState);
+        }
+
+        /// <summary>
+        /// Cleans unused blockstates from the subchunk blockstate palette.
+        /// </summary>
+        public void CleanPalette()
+        {
+            if (!AllowPaletteCleaning) return; //Prevent recursions.
+
+            var currentSize = BlockPalette.Size;
+            SubChunk<T> tempSubChunk = new SubChunk<T>(GetBlockState(0, 0, 0));
+            tempSubChunk.AllowPaletteCleaning = false;
+            for (int x = 0; x < SubChunk<T>.SIZE; x++)
+            {
+                for (int y = 0; y < SubChunk<T>.SIZE; y++)
+                {
+                    for (int z = 0; z < SubChunk<T>.SIZE; z++)
+                    {
+                        var currentBlockState = GetBlockState(x, y, z);
+                        tempSubChunk.SetBlockState(currentBlockState, x, y, z);
+                    }
+                }
+            }
+
+            BlockPalette.CopyFromPalette(tempSubChunk.BlockPalette);
+            Layers = tempSubChunk.Layers;
+
+            var amountRemoved = currentSize - tempSubChunk.BlockPalette.Size;
+            Debug.WriteLine($"Cleaned {amountRemoved} blockstates from the palette.");
+            
+            if(BlockPalette.Size > NUM_OF_BLOCKS)
+            {
+                throw new Exception("Failed to clean palette: This should never happen.");
+            }
         }
     }
 }
