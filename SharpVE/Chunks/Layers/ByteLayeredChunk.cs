@@ -1,4 +1,5 @@
-﻿using SharpVE.Interfaces;
+﻿using System.Collections.Generic;
+using SharpVE.Interfaces;
 
 namespace SharpVE.Chunks.Layers
 {
@@ -92,12 +93,12 @@ namespace SharpVE.Chunks.Layers
 
                 var layer = new ShortLayeredChunk<T>(subChunk, this, localY);
                 layer.SetBlockState(subChunk, blockState, localX, localY, localZ);
-                subChunk.SetLayer(localY, layer);
+                subChunk.SetLayer(layer, localY);
                 return;
             }
 
             T oldBlock = GetBlockState(subChunk, localX, localZ);
-            if (blockState != oldBlock)
+            if (!EqualityComparer<T>.Default.Equals(oldBlock, blockState))
             {
                 var idx = localX + (localZ * SubChunk<T>.SIZE);
                 BlockIDs[idx] = (byte)fullId;

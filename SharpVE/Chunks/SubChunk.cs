@@ -88,12 +88,12 @@ namespace SharpVE.Chunks
             return this;
         }
 
-        public ISubChunk<T> Set(T blockState)
+        public ISubChunk<T> Fill(T blockState)
         {
             throw new NotImplementedException();
         }
 
-        public ISubChunk<T> SetLayer(T blockState, int localY)
+        public ISubChunk<T> FillLayer(T blockState, int localY)
         {
             if(Layers[localY] is SingleLayeredChunk<T> layer)
             {
@@ -111,14 +111,26 @@ namespace SharpVE.Chunks
                     return this;
                 }
             }
-            return Set(blockState);
+            return Fill(blockState);
+        }
+
+        public void SetLayer(ILayeredChunk<T> layer, int localY)
+        {
+            if(layer is ILayeredChunk<T> shared) //Shared Block Layer this is just a temporary placeholder.
+            {
+                if(!BlockPalette.Has(shared.BlockState))
+                {
+                    BlockPalette.Add(shared.BlockState);
+                }
+            }
+            Layers[localY] = layer;
         }
 
         public bool IsAll(Predicate<T> predicate)
         {
             var palette = BlockPalette.BlockStates;
             var paletteSize = palette.Length;
-            for(int i = 0; i < SIZE; i++)
+            for(int i = 0; i < paletteSize; i++)
             {
                 T blockState = palette[i];
                 if (!predicate.Invoke(blockState)) return false;

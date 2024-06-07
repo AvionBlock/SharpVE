@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using SharpVE.Interfaces;
 
 namespace SharpVE.Chunks.Layers
 {
-    public class ShortLayeredChunk<T>
+    public class ShortLayeredChunk<T> : ILayeredChunk<T>
     {
         /// <summary>
         /// The list of stored blocks.
