@@ -54,7 +54,6 @@ namespace SharpVE.Chunks.Layers
             }
         }
 
-        //Getters
         /// <summary>
         /// Gets a <see cref="BlockState"/> in the layer.
         /// </summary>
@@ -82,7 +81,6 @@ namespace SharpVE.Chunks.Layers
             return blockId;
         }
 
-        //Setters
         /// <summary>
         /// Sets a <see cref="BlockState"/> in the layer.
         /// </summary>
