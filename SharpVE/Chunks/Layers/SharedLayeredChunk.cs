@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace SharpVE.Chunks.Layers
 {
-        /// <summary>
-        /// A shared pool of single blockstate layers.
-        /// </summary>
+    /// <summary>
+    /// A shared pool of single blockstate layers.
+    /// </summary>
     public class SharedLayeredChunk<T> : SingleLayeredChunk<T>
     {
         private static ConcurrentDictionary<Object, SharedLayeredChunk<T>?> sharedInstances = new ConcurrentDictionary<Object,SharedLayeredChunk<T>?>();

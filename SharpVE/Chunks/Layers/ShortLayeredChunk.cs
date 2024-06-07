@@ -3,6 +3,9 @@ using SharpVE.Interfaces;
 
 namespace SharpVE.Chunks.Layers
 {
+    /// <summary>
+    /// A layered chunk
+    /// </summary>
     public class ShortLayeredChunk<T> : ILayeredChunk<T>
     {
         /// <summary>

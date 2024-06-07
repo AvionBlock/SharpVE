@@ -12,7 +12,7 @@ namespace SharpVE.Chunks
     public class SubChunk<T> : ISubChunk<T>
     {
         /// <summary>
-        /// The size of the subchunk in X, Y and Z axis's.
+        /// The size of the subchunk on the X, Y and Z axis's.
         /// </summary>
         public static ushort SIZE = 16; //Default.
 
@@ -59,17 +59,32 @@ namespace SharpVE.Chunks
             }
         }
 
-
+        /// <summary>
+        /// Get's a blockstate on the localX, localY and localZ coordinates.
+        /// </summary>
+        /// <param name="localX"> The local X coordinate </param>
+        /// <param name="localY"> The local Y coordinate </param>
+        /// <param name="localZ"> The local Z coordinate </param>
         public T GetBlockState(int localX, int localY, int localZ)
         {
             return Layers[localY].GetBlockState(this, localX, localZ);
         }
 
+        /// <summary>
+        /// Get's a blockstate ID on the localX, localY and localZ coordinates.
+        /// </summary>
+        /// <param name="localX"> The local X coordinate </param>
+        /// <param name="localY"> The local Y coordinate </param>
+        /// <param name="localZ"> The local Z coordinate </param>
         public int GetBlockStateID(int localX, int localY, int localZ)
         {
             return Layers[localY].GetBlockStateID(this, localX, localZ);
         }
 
+        /// <summary>
+        /// Get's a blockstate ID from a blockState instance.
+        /// </summary>
+        /// <param name="blockState"> The blockstate instance </param>
         public int GetBlockStateID(T blockState)
         {
             int paletteSize = BlockPalette.BlockStates.Length;
@@ -83,17 +98,33 @@ namespace SharpVE.Chunks
             return -1;
         }
 
+        /// <summary>
+        /// Set's a blockstate
+        /// </summary>
+        /// <param name="blockState"> The blockstate to set. </param>
+        /// <param name="localX"> the local X coordinate to set the blockstate to. </param> 
+        /// <param name="localY"> the local Y coordinate to set the blockstate to. </param> 
+        /// <param name="localZ"> the local Z coordinate to set the blockstate to. </param> 
         public ISubChunk<T> SetBlockState(T blockState, int localX, int localY, int localZ)
         {
             Layers[localY].SetBlockState(this, blockState, localX, localY, localZ);
             return this;
         }
 
+        /// <summary>
+        /// Fills the subchunk with a blockstate.
+        /// </summary>
+        /// <param name="blockState"> The blockstate to fill the subchunk with. </param>
         public ISubChunk<T> Fill(T blockState)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Fills a layer with a blockstate.
+        /// </summary>
+        /// <param name="blockState"> The blockstate to fill the layer with. </param>
+        /// <param name="localY"> The local Y layer to set. </param>
         public ISubChunk<T> FillLayer(T blockState, int localY)
         {
             if(Layers[localY] is SingleLayeredChunk<T> layer)
@@ -115,6 +146,11 @@ namespace SharpVE.Chunks
             return Fill(blockState);
         }
 
+        /// <summary>
+        /// Set's a layer on the specified Y layer.
+        /// </summary>
+        /// <param name="layer"> The layer to replace with. </param>
+        /// <param name="localY"> The local Y layer to set. </param>
         public void SetLayer(ILayeredChunk<T> layer, int localY)
         {
             if(layer is SharedLayeredChunk<T> shared)
@@ -127,6 +163,10 @@ namespace SharpVE.Chunks
             Layers[localY] = layer;
         }
 
+        /// <summary>
+        /// Check's if the entire subchunk matches the predicate.
+        /// </summary>
+        /// <param name="predicate"> The predicate to check against. </param>
         public bool IsAll(Predicate<T> predicate)
         {
             var palette = BlockPalette.BlockStates;
@@ -139,6 +179,10 @@ namespace SharpVE.Chunks
             return true;
         }
 
+        /// <summary>
+        /// Check's if the entire subchunk matches the blockstate.
+        /// </summary>
+        /// <param name="blockState"> The blockstate to check against. </param>
         public bool IsAll(T blockState)
         {
             return BlockPalette.BlockStates.Length == 1 && EqualityComparer<T>.Default.Equals(BlockPalette.Get(0), blockState);

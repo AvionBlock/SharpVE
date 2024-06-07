@@ -2,6 +2,9 @@ using SharpVE.Interfaces;
 
 namespace SharpVE.Chunks.Layers
 {
+    /// <summary>
+    /// A layered chunk
+    /// </summary>
     public class NibbleLayeredChunk<T> : ILayeredChunk<T>
     {
         /// <summary>
