@@ -6,6 +6,15 @@ namespace SharpVE.Chunks.Layers
     {
         public T BlockState { get; private set; }
 
+        public SingleLayeredChunk(SubChunk<T> subChunk, T blockState)
+        {
+            BlockState = blockState;
+            if(!subChunk.BlockPalette.Has(blockState))
+            {
+                subChunk.BlockPalette.Add(blockState);
+            }
+        }
+
         public T GetBlockState(SubChunk<T> subChunk, int localX, int localZ)
         {
             throw new System.NotImplementedException();

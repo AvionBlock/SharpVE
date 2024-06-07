@@ -116,7 +116,7 @@ namespace SharpVE.Chunks
 
         public void SetLayer(ILayeredChunk<T> layer, int localY)
         {
-            if(layer is ILayeredChunk<T> shared) //Shared Block Layer this is just a temporary placeholder.
+            if(layer is SharedLayeredChunk<T> shared)
             {
                 if(!BlockPalette.Has(shared.BlockState))
                 {
