@@ -53,12 +53,13 @@ namespace SharpVE.Chunks
         public SubChunk(T defaultBlockState) : this(8)
         {
             BlockPalette.Add(defaultBlockState);
-            for(int  i = 0; i < 8; i++)
+            for(int i = 0; i < 8; i++)
             {
-                //fill layer
+                FillLayer(defaultBlockState, i);
             }
         }
 
+        
         public T GetBlockState(int localX, int localY, int localZ)
         {
             return Layers[localY].GetBlockState(this, localX, localZ);
