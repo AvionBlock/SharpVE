@@ -85,7 +85,7 @@ namespace SharpVE.Chunks.Layers
             if (fullId > 255)
             {
                 subChunk.BlockPalette.Clean();
-                if (subChunk.BlockPalette.BlockStates.Length <= 255) //Probably will change Size to a var.
+                if (subChunk.BlockPalette.Size <= 255) //Probably will change Size to a var.
                 {
                     subChunk.SetBlockState(blockState, localX, localY, localZ);
                     return;

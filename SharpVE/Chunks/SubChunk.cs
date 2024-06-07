@@ -87,7 +87,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate instance </param>
         public int GetBlockStateID(T blockState)
         {
-            int paletteSize = BlockPalette.BlockStates.Length;
+            int paletteSize = BlockPalette.Size;
             for (int i = 0; i < paletteSize; i++)
             {
                 if (EqualityComparer<T>.Default.Equals(BlockPalette.BlockStates[i], blockState))
@@ -185,7 +185,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate to check against. </param>
         public bool IsAll(T blockState)
         {
-            return BlockPalette.BlockStates.Length == 1 && EqualityComparer<T>.Default.Equals(BlockPalette.Get(0), blockState);
+            return BlockPalette.Size == 1 && EqualityComparer<T>.Default.Equals(BlockPalette.Get(0), blockState);
         }
     }
 }

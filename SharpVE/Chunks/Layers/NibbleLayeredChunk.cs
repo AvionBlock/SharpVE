@@ -85,7 +85,7 @@ namespace SharpVE.Chunks.Layers
             var paletteId = subChunk.GetBlockStateID(blockState);
             if (paletteId == -1)
             {
-                paletteId = subChunk.BlockPalette.BlockStates.Length;
+                paletteId = subChunk.BlockPalette.Size;
                 subChunk.BlockPalette.Add(blockState);
             }
             if (paletteId > 15)
