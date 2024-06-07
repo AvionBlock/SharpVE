@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SharpVE.Interfaces;
 
 namespace SharpVE.Chunks.Layers
@@ -17,20 +18,27 @@ namespace SharpVE.Chunks.Layers
 
         public T GetBlockState(SubChunk<T> subChunk, int localX, int localZ)
         {
-            throw new System.NotImplementedException();
+            return BlockState;
         }
 
         public int GetBlockStateID(SubChunk<T> subChunk, int localX, int localZ)
         {
-            throw new System.NotImplementedException();
+            return subChunk.GetBlockStateID(BlockState);
         }
 
         public void SetBlockState(SubChunk<T> subChunk, T blockState, int localX, int localY, int localZ)
         {
-            throw new System.NotImplementedException();
+            if(EqualityComparer<T>.Default.Equals(blockState, BlockState))
+            {
+                return;
+            }
+
+            var layer = new NibbleLayeredChunk<T>(subChunk, blockState, localY);
+            subChunk.SetLayer(layer, localY);
+            layer.SetBlockState(subChunk, blockState, localX, localY, localZ);
         }
 
-        public void Set(SubChunk<T> subChunk, T blockState, int localY)
+        public virtual void Fill(SubChunk<T> subChunk, T blockState, int localY)
         {
             BlockState = blockState;
             if(!subChunk.BlockPalette.Has(blockState))

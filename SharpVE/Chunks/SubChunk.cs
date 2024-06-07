@@ -59,7 +59,7 @@ namespace SharpVE.Chunks
             }
         }
 
-        
+
         public T GetBlockState(int localX, int localY, int localZ)
         {
             return Layers[localY].GetBlockState(this, localX, localZ);
@@ -98,7 +98,7 @@ namespace SharpVE.Chunks
         {
             if(Layers[localY] is SingleLayeredChunk<T> layer)
             {
-                layer.Set(this, blockState, localY);
+                layer.Fill(this, blockState, localY);
             }
             else
             {

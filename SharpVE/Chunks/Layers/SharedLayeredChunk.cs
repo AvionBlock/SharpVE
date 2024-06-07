@@ -19,7 +19,7 @@ namespace SharpVE.Chunks.Layers
         /// <param name="blockState"> The subchunk to associate the layer to. </param>
         /// <param name="localY"> The blockstate to set for the layer. </param>
         /// <param name="subChunk"> The y layer that the layer will be set to. </param>
-        public void Fill(SubChunk<T> subChunk, T blockState, int localY)
+        public override void Fill(SubChunk<T> subChunk, T blockState, int localY)
         {
             if(!EqualityComparer<T>.Default.Equals(blockState, BlockState))
             {
