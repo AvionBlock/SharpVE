@@ -6,9 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Blocks\" />
+    <Compile Remove="Blocks\**" />
+    <Compile Remove="Registries\**" />
+    <EmbeddedResource Remove="Blocks\**" />
+    <EmbeddedResource Remove="Registries\**" />
+    <None Remove="Blocks\**" />
+    <None Remove="Registries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Registries\" />
   </ItemGroup>
 
 </Project>
