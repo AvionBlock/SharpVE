@@ -14,7 +14,7 @@ namespace SharpVE.Chunks
         private bool AllowPaletteCleaning = true;
 
         /// <summary>
-        /// Defines wether the subchunk has been updated, useful for remeshing.
+        /// Defines wether the subchunk has been updated, useful for remeshing. Set to false when you have acknowledged the update.
         /// </summary>
         public bool IsDirty { get; set; } = true;
 

@@ -10,6 +10,11 @@ namespace SharpVE.Chunks
     public class SingleSubChunk<T> : ISubChunk<T> where T : class
     {
         /// <summary>
+        /// Defines wether the subchunk has been updated, useful for remeshing. Set to false when you have acknowledged the update.
+        /// </summary>
+        public bool IsDirty { get; set; } = true;
+
+        /// <summary>
         /// The set blockstate.
         /// </summary>
         public T BlockState = default!;
