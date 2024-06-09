@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using SharpVE.Interfaces;
 
 namespace SharpVE.Chunks.Layers
@@ -6,7 +5,7 @@ namespace SharpVE.Chunks.Layers
     /// <summary>
     /// A single block layered chunk
     /// </summary>
-    public class SingleLayeredChunk<T> : ILayeredChunk<T>
+    public class SingleLayeredChunk<T> : ILayeredChunk<T> where T : class
     {
         public T BlockState { get; private set; }
 
@@ -31,7 +30,7 @@ namespace SharpVE.Chunks.Layers
 
         public void SetBlockState(SubChunk<T> subChunk, T blockState, int localX, int localY, int localZ)
         {
-            if(EqualityComparer<T>.Default.Equals(blockState, BlockState))
+            if(blockState == BlockState)
             {
                 return;
             }

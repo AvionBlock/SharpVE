@@ -5,7 +5,7 @@ namespace SharpVE.Interfaces
     /// <summary>
     /// A interface for a layered chunk.
     /// </summary>
-    public interface ILayeredChunk<T>
+    public interface ILayeredChunk<T> where T : class //BlockStates must be an object.
     {
         /// <summary>
         /// Gets a <see cref="BlockState"/> in the layer.

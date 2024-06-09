@@ -7,7 +7,7 @@ namespace SharpVE.Chunks.Layers
     /// <summary>
     /// A shared pool of single blockstate layers.
     /// </summary>
-    public class SharedLayeredChunk<T> : SingleLayeredChunk<T>
+    public class SharedLayeredChunk<T> : SingleLayeredChunk<T> where T : class
     {
         private static ConcurrentDictionary<Object, SharedLayeredChunk<T>?> sharedInstances = new ConcurrentDictionary<Object,SharedLayeredChunk<T>?>();
 
@@ -21,7 +21,7 @@ namespace SharpVE.Chunks.Layers
         /// <param name="subChunk"> The y layer that the layer will be set to. </param>
         public override void Fill(SubChunk<T> subChunk, T blockState, int localY)
         {
-            if(!EqualityComparer<T>.Default.Equals(blockState, BlockState))
+            if(blockState != BlockState)
             {
                 subChunk.SetLayer(GetOrAdd(subChunk, blockState), localY);
             }

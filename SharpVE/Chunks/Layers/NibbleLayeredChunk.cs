@@ -5,7 +5,7 @@ namespace SharpVE.Chunks.Layers
     /// <summary>
     /// A layered chunk
     /// </summary>
-    public class NibbleLayeredChunk<T> : ILayeredChunk<T>
+    public class NibbleLayeredChunk<T> : ILayeredChunk<T> where T : class
     {
         /// <summary>
         /// The list of stored blocks.

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using SharpVE.Interfaces;
+﻿using SharpVE.Interfaces;
 
 namespace SharpVE.Chunks.Layers
 {
     /// <summary>
     /// A layered chunk
     /// </summary>
-    public class ShortLayeredChunk<T> : ILayeredChunk<T>
+    public class ShortLayeredChunk<T> : ILayeredChunk<T> where T : class
     {
         /// <summary>
         /// The list of stored blocks.
@@ -108,7 +107,7 @@ namespace SharpVE.Chunks.Layers
             }
 
             T oldBlock = GetBlockState(subChunk, localX, localZ);
-            if (!EqualityComparer<T>.Default.Equals(oldBlock, blockState))
+            if (oldBlock != blockState)
             {
                 var idx = localX + (localZ * ISubChunk<T>.SIZE);
                 BlockIDs[idx] = (short)fullId;

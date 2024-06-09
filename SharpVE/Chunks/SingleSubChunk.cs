@@ -1,6 +1,5 @@
 ﻿using SharpVE.Interfaces;
 using System;
-using System.Collections.Generic;
 
 namespace SharpVE.Chunks
 {
@@ -8,7 +7,7 @@ namespace SharpVE.Chunks
     /// A single block subchunk.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SingleSubChunk<T> : ISubChunk<T>
+    public class SingleSubChunk<T> : ISubChunk<T> where T : class
     {
         /// <summary>
         /// The set blockstate.
@@ -52,7 +51,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate instance </param>
         public int GetBlockStateID(T blockState)
         {
-            return EqualityComparer<T>.Default.Equals(blockState, BlockState)? 0 : -1;
+            return blockState == BlockState? 0 : -1;
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace SharpVE.Chunks
         /// <param name="localZ"> the local Z coordinate to set the blockstate to. </param>
         public ISubChunk<T> SetBlockState(T blockState, int localX, int localY, int localZ)
         {
-            if (!EqualityComparer<T>.Default.Equals(blockState, BlockState))
+            if (blockState != BlockState)
             {
                 var newSubChunk = new SubChunk<T>(BlockState);
                 return newSubChunk.SetBlockState(blockState, localX, localY, localZ);
@@ -89,7 +88,7 @@ namespace SharpVE.Chunks
         /// <param name="localY"> The local Y layer to set. </param>
         public ISubChunk<T> FillLayer(T blockState, int localY)
         {
-            if(!EqualityComparer<T>.Default.Equals(blockState, BlockState))
+            if(blockState != BlockState)
             {
                 var newSubChunk = new SubChunk<T>(BlockState);
                 return newSubChunk.FillLayer(blockState, localY);
@@ -112,7 +111,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate to check against. </param>
         public bool IsAll(T blockState)
         {
-            return EqualityComparer<T>.Default.Equals(blockState, BlockState);
+            return blockState == BlockState;
         }
 
         /// <summary>

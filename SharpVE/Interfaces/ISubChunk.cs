@@ -2,7 +2,7 @@ using System;
 
 namespace SharpVE.Interfaces
 {
-    public interface ISubChunk<T>
+    public interface ISubChunk<T> where T : class //BlockStates must be an object.
     {
         /// <summary>
         /// The size of the subchunk on the X, Y and Z axis's.

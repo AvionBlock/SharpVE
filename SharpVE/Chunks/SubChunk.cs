@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using SharpVE.Chunks.Layers;
 using SharpVE.Data;
@@ -10,7 +9,7 @@ namespace SharpVE.Chunks
     /// <summary>
     /// A subchunk.
     /// </summary>
-    public class SubChunk<T> : ISubChunk<T>
+    public class SubChunk<T> : ISubChunk<T> where T : class
     {
         private bool AllowPaletteCleaning = true;
 
@@ -82,7 +81,7 @@ namespace SharpVE.Chunks
             int paletteSize = GetBlockPaletteSize();
             for (int i = 0; i < paletteSize; i++)
             {
-                if (EqualityComparer<T>.Default.Equals(BlockPalette.BlockStates[i], blockState))
+                if (BlockPalette.BlockStates[i] == blockState)
                 {
                     return i;
                 }
@@ -109,7 +108,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate to fill the subchunk with. </param>
         public ISubChunk<T> Fill(T blockState)
         {
-            throw new NotImplementedException();
+            return new SingleSubChunk<T>(blockState);
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace SharpVE.Chunks
 
             for(int i = 0; i < ISubChunk<T>.SIZE; i++)
             {
-                if(!(Layers[i] is SingleLayeredChunk<T> sLayer && EqualityComparer<T>.Default.Equals(sLayer.BlockState, blockState)))
+                if(!(Layers[i] is SingleLayeredChunk<T> sLayer && sLayer.BlockState == blockState))
                 {
                     return this;
                 }
@@ -177,7 +176,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate to check against. </param>
         public bool IsAll(T blockState)
         {
-            return GetBlockPaletteSize() == 1 && EqualityComparer<T>.Default.Equals(BlockPalette.Get(0), blockState);
+            return GetBlockPaletteSize() == 1 && BlockPalette.Get(0) == blockState;
         }
 
         /// <summary>
