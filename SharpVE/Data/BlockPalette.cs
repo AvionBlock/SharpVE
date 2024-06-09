@@ -6,7 +6,7 @@ namespace SharpVE.Data
     /// <summary>
     /// Holds a list of block states.
     /// </summary>
-    public class BlockPalette<T>
+    public class BlockPalette<T> where T : class
     {
         /// <summary>
         /// The list of blockstates.

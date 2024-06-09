@@ -15,7 +15,12 @@ namespace SharpVE.Chunks
         public T BlockState = default!;
 
         /// <summary>
-        /// Creates a new single block <see cref="SubChunk{T}"/>.
+        /// Creates a new single block <see cref="SingleSubChunk{T}"/>.
+        /// </summary>
+        public SingleSubChunk() { }
+
+        /// <summary>
+        /// Creates a new single block <see cref="SingleSubChunk{T}"/>.
         /// </summary>
         /// <param name="blockState">The blockstate to set.</param>
         public SingleSubChunk(T blockState)

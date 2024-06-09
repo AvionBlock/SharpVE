@@ -23,7 +23,7 @@ namespace SharpVE.Chunks.Layers
         {
             if(blockState != BlockState)
             {
-                subChunk.SetLayer(GetOrAdd(subChunk, blockState), localY);
+                subChunk.SetLayer(GetOrAdd(subChunk, blockState), localY); //Already updates subchunk.
             }
         }
 
@@ -34,8 +34,6 @@ namespace SharpVE.Chunks.Layers
         /// <param name="blockState"> The blockstate to set for the layer. </param> 
         public static SharedLayeredChunk<T> GetOrAdd(SubChunk<T> subChunk, T blockState)
         {
-            if(blockState == null) throw new ArgumentNullException(nameof(blockState));
-
             var shared = sharedInstances.GetValueOrDefault(blockState);
             if(shared == null)
             {

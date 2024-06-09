@@ -16,6 +16,8 @@ namespace SharpVE.Chunks.Layers
             {
                 subChunk.BlockPalette.Add(blockState);
             }
+
+            subChunk.IsDirty = true; //Update subchunk.
         }
 
         public T GetBlockState(SubChunk<T> subChunk, int localX, int localZ)
@@ -36,7 +38,7 @@ namespace SharpVE.Chunks.Layers
             }
 
             var layer = new NibbleLayeredChunk<T>(subChunk, blockState, localY);
-            subChunk.SetLayer(layer, localY);
+            subChunk.SetLayer(layer, localY); //Already updates subchunk.
             layer.SetBlockState(subChunk, blockState, localX, localY, localZ);
         }
 
@@ -47,6 +49,8 @@ namespace SharpVE.Chunks.Layers
             {
                 subChunk.BlockPalette.Add(blockState);
             }
+
+            subChunk.IsDirty = true; //Update subchunk.
         }
     }
 }
