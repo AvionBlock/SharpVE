@@ -7,12 +7,12 @@ namespace SharpVE.Interfaces
         /// <summary>
         /// The size of the subchunk on the X, Y and Z axis's.
         /// </summary>
-        public static ushort SIZE = 16; //Default.
+        static ushort SIZE = 16; //Default.
 
         /// <summary>
         /// The total number of blocks inside the sub chunk.
         /// </summary>
-        public static ushort NUM_OF_BLOCKS = (ushort)(SIZE ^ 3);
+        static ushort NUM_OF_BLOCKS = (ushort)(SIZE ^ 3);
 
         /// <summary>
         /// Get's a blockstate on the localX, localY and localZ coordinates.

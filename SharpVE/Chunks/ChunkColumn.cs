@@ -1,12 +1,14 @@
 ﻿using SharpVE.Chunks;
 using SharpVE.Data;
+using SharpVE.Interfaces;
+using System;
 
 namespace SharpVE.World.Chunks
 {
     /// <summary>
     /// A chunk column.
     /// </summary>
-    public class ChunkColumn<T>
+    public class ChunkColumn<T> : IChunkColumn<T>
     {
         /// <summary>
         /// The chunk position.
@@ -16,7 +18,7 @@ namespace SharpVE.World.Chunks
         /// <summary>
         /// The subchunks/sections that make up the chunk column.
         /// </summary>
-        public SubChunk<T>[] SubChunks { get; private set; } 
+        public ISubChunk<T>[] SubChunks { get; private set; } 
 
         /// <summary>
         /// Constructs a new chunk column.
@@ -26,10 +28,14 @@ namespace SharpVE.World.Chunks
         /// <param name="minY">The minimum Y coordinate of the chunk column.</param>
         /// <param name="maxY">The maximum Y coordinate of the chunk column.</param>
         /// <param name="defaultBlockState">The default block state to set when the chunk column is created.</param>
-        public ChunkColumn(int x, int y, int minY, int maxY, T defaultBlockState)
+        public ChunkColumn(T defaultBlockState, int x, int y)
         {
-            var chunkColumnHeight = maxY - minY;
             Position = new ChunkPosition(x, y);
+            SubChunks = new SubChunk<T>[(int)(MathF.Ceiling(IChunkColumn<T>.ColumnHeight))];
+            for (int i = 0; i < SubChunks.Length; i++)
+            {
+                SubChunks[i] = new SingleSubChunk<T>(defaultBlockState);
+            }
         }
     }
 }
