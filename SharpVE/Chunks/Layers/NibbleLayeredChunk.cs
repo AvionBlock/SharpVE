@@ -28,13 +28,13 @@ namespace SharpVE.Chunks.Layers
         /// <param name="localY">The local Y layer of this layer to set in the subChunk.</param>
         public NibbleLayeredChunk(SubChunk<T> subChunk, T blockState, int localY)
         {
-            BlockIDs = new byte[SubChunk<T>.SIZE * SubChunk<T>.SIZE / 2];
+            BlockIDs = new byte[ISubChunk<T>.SIZE * ISubChunk<T>.SIZE / 2];
             var paletteId = subChunk.GetBlockStateID(blockState);
             if (paletteId != 0)
             {
-                for (var x = 0; x < SubChunk<T>.SIZE; x++)
+                for (var x = 0; x < ISubChunk<T>.SIZE; x++)
                 {
-                    for (var z = 0; z < SubChunk<T>.SIZE; z++)
+                    for (var z = 0; z < ISubChunk<T>.SIZE; z++)
                     {
                         SetBlockState(subChunk, blockState, x, localY, z);
                     }
@@ -63,7 +63,7 @@ namespace SharpVE.Chunks.Layers
         /// <returns></returns>
         public int GetBlockStateID(SubChunk<T>? subChunk, int localX, int localZ) //Special Case
         {
-            var idx = (localX + (localZ * SubChunk<T>.SIZE)) / 2;
+            var idx = (localX + (localZ * ISubChunk<T>.SIZE)) / 2;
             var blockId = (int)BlockIDs[idx];
 
             var mod2 = localX % 2;
@@ -85,7 +85,7 @@ namespace SharpVE.Chunks.Layers
             var paletteId = subChunk.GetBlockStateID(blockState);
             if (paletteId == -1)
             {
-                paletteId = subChunk.BlockPalette.Size;
+                paletteId = subChunk.GetBlockPaletteSize();
                 subChunk.BlockPalette.Add(blockState);
             }
             if (paletteId > 15)
@@ -99,7 +99,7 @@ namespace SharpVE.Chunks.Layers
             var oldBlockId = GetBlockStateID(null, localX, localZ);
             if (oldBlockId != paletteId)
             {
-                var idx = (localX + (localZ * SubChunk<T>.SIZE)) / 2;
+                var idx = (localX + (localZ * ISubChunk<T>.SIZE)) / 2;
                 var block = BlockIDs[idx];
                 if (localX % 2 == 0)
                 {

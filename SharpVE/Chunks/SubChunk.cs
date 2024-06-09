@@ -15,16 +15,6 @@ namespace SharpVE.Chunks
         private bool AllowPaletteCleaning = true;
 
         /// <summary>
-        /// The size of the subchunk on the X, Y and Z axis's.
-        /// </summary>
-        public static ushort SIZE = 16; //Default.
-
-        /// <summary>
-        /// The total number of blocks inside the sub chunk.
-        /// </summary>
-        public static ushort NUM_OF_BLOCKS = (ushort)(SIZE ^ 3);
-
-        /// <summary>
         /// The block palette inside the subchunk.
         /// </summary>
         public BlockPalette<T> BlockPalette { get; private set; }
@@ -32,7 +22,7 @@ namespace SharpVE.Chunks
         /// <summary>
         /// The layers that make up the subchunk. Each layer contains block data.
         /// </summary>
-        public ILayeredChunk<T>[] Layers { get; private set; } = new ILayeredChunk<T>[SIZE];
+        public ILayeredChunk<T>[] Layers { get; private set; } = new ILayeredChunk<T>[ISubChunk<T>.SIZE];
 
         /// <summary>
         /// Creates a new subchunk with a specified default palette size.
@@ -89,7 +79,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate instance </param>
         public int GetBlockStateID(T blockState)
         {
-            int paletteSize = BlockPalette.Size;
+            int paletteSize = GetBlockPaletteSize();
             for (int i = 0; i < paletteSize; i++)
             {
                 if (EqualityComparer<T>.Default.Equals(BlockPalette.BlockStates[i], blockState))
@@ -138,7 +128,7 @@ namespace SharpVE.Chunks
                 Layers[localY] = SharedLayeredChunk<T>.GetOrAdd(this, blockState);
             }
 
-            for(int i = 0; i < SIZE; i++)
+            for(int i = 0; i < ISubChunk<T>.SIZE; i++)
             {
                 if(!(Layers[i] is SingleLayeredChunk<T> sLayer && EqualityComparer<T>.Default.Equals(sLayer.BlockState, blockState)))
                 {
@@ -187,7 +177,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate to check against. </param>
         public bool IsAll(T blockState)
         {
-            return BlockPalette.Size == 1 && EqualityComparer<T>.Default.Equals(BlockPalette.Get(0), blockState);
+            return GetBlockPaletteSize() == 1 && EqualityComparer<T>.Default.Equals(BlockPalette.Get(0), blockState);
         }
 
         /// <summary>
@@ -197,14 +187,14 @@ namespace SharpVE.Chunks
         {
             if (!AllowPaletteCleaning) return; //Prevent recursions.
 
-            var currentSize = BlockPalette.Size;
+            var currentSize = GetBlockPaletteSize();
             SubChunk<T> tempSubChunk = new SubChunk<T>(GetBlockState(0, 0, 0));
             tempSubChunk.AllowPaletteCleaning = false;
-            for (int x = 0; x < SubChunk<T>.SIZE; x++)
+            for (int x = 0; x < ISubChunk<T>.SIZE; x++)
             {
-                for (int y = 0; y < SubChunk<T>.SIZE; y++)
+                for (int y = 0; y < ISubChunk<T>.SIZE; y++)
                 {
-                    for (int z = 0; z < SubChunk<T>.SIZE; z++)
+                    for (int z = 0; z < ISubChunk<T>.SIZE; z++)
                     {
                         var currentBlockState = GetBlockState(x, y, z);
                         tempSubChunk.SetBlockState(currentBlockState, x, y, z);
@@ -215,13 +205,22 @@ namespace SharpVE.Chunks
             BlockPalette.CopyFromPalette(tempSubChunk.BlockPalette);
             Layers = tempSubChunk.Layers;
 
-            var amountRemoved = currentSize - tempSubChunk.BlockPalette.Size;
+            var amountRemoved = currentSize - tempSubChunk.GetBlockPaletteSize();
             Debug.WriteLine($"Cleaned {amountRemoved} blockstates from the palette.");
             
-            if(BlockPalette.Size > NUM_OF_BLOCKS)
+            if(GetBlockPaletteSize() > ISubChunk<T>.NUM_OF_BLOCKS)
             {
                 throw new Exception("Failed to clean palette: This should never happen.");
             }
+        }
+
+        /// <summary>
+        /// Get's the size of the block palette.
+        /// </summary>
+        /// <returns>The size of all the unique blocks.</returns>
+        public int GetBlockPaletteSize()
+        {
+            return BlockPalette.Size;
         }
     }
 }

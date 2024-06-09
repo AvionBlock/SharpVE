@@ -29,12 +29,30 @@ namespace SharpVE.Chunks.Layers
         /// <param name="localY">The local Y layer of this layer to set in the subChunk.</param>
         public ByteLayeredChunk(SubChunk<T> subChunk, T blockState, int localY)
         {
-            BlockIDs = new byte[SubChunk<T>.SIZE * SubChunk<T>.SIZE];
-            for (var x = 0; x < SubChunk<T>.SIZE; x++)
+            BlockIDs = new byte[ISubChunk<T>.SIZE * ISubChunk<T>.SIZE];
+            for (var x = 0; x < ISubChunk<T>.SIZE; x++)
             {
-                for (var z = 0; z < SubChunk<T>.SIZE; z++)
+                for (var z = 0; z < ISubChunk<T>.SIZE; z++)
                 {
                     SetBlockState(subChunk, blockState, x, localY, z);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="ByteLayeredChunk{T}"/> that is the size of a <see cref="byte"/> for each block ID from a <see cref="NibbleLayeredChunk{T}"/>
+        /// </summary>
+        /// <param name="subChunk">The subchunk to set the blockState to.</param>
+        /// <param name="nibbleLayeredChunk">The nibble layer to convert from.</param>
+        /// <param name="localY">The local Y layer of this layer to set in the subChunk.</param>
+        public ByteLayeredChunk(SubChunk<T> subChunk, NibbleLayeredChunk<T> nibbleLayeredChunk, int localY)
+        {
+            BlockIDs = new byte[ISubChunk<T>.SIZE * ISubChunk<T>.SIZE];
+            for(int x = 0; x < ISubChunk<T>.SIZE; x++)
+            {
+                for (int z = 0;z < ISubChunk<T>.SIZE; z++)
+                {
+                    SetBlockState(subChunk, nibbleLayeredChunk.GetBlockState(subChunk, x, z), x, localY, z);
                 }
             }
         }
@@ -60,7 +78,7 @@ namespace SharpVE.Chunks.Layers
         /// <returns>The block ID for the block palette.</returns>
         public int GetBlockStateID(SubChunk<T> subChunk, int localX, int localZ)
         {
-            var idx = localX + (localZ * SubChunk<T>.SIZE);
+            var idx = localX + (localZ * ISubChunk<T>.SIZE);
             var blockId = BlockIDs[idx];
 
             return blockId & 0xFF;
@@ -82,10 +100,10 @@ namespace SharpVE.Chunks.Layers
             }
 
             var fullId = subChunk.GetBlockStateID(blockState);
-            if (fullId > 255)
+            if (fullId > byte.MaxValue)
             {
                 subChunk.CleanPalette();
-                if (subChunk.BlockPalette.Size <= 255) //Probably will change Size to a var.
+                if (subChunk.GetBlockPaletteSize() <= byte.MaxValue) //Probably will change Size to a var.
                 {
                     subChunk.SetBlockState(blockState, localX, localY, localZ);
                     return;
@@ -100,7 +118,7 @@ namespace SharpVE.Chunks.Layers
             T oldBlock = GetBlockState(subChunk, localX, localZ);
             if (!EqualityComparer<T>.Default.Equals(oldBlock, blockState))
             {
-                var idx = localX + (localZ * SubChunk<T>.SIZE);
+                var idx = localX + (localZ * ISubChunk<T>.SIZE);
                 BlockIDs[idx] = (byte)fullId;
             }
         }
