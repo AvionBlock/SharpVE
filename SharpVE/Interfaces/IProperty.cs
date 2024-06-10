@@ -1,6 +1,7 @@
 ﻿namespace SharpVE.Interfaces
 {
-    public interface IBlockState
+    public interface IProperty<T>
     {
+
     }
 }
