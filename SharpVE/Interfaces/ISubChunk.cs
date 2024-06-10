@@ -15,7 +15,7 @@ namespace SharpVE.Interfaces
         static ushort NUM_OF_BLOCKS = (ushort)(SIZE ^ 3);
 
         /// <summary>
-        /// Defines wether the subchunk has been updated, useful for remeshing. Set to false when you have acknowledged the update.
+        /// Defines whether the subchunk has been updated. Useful for remeshing.
         /// </summary>
         bool IsDirty { get; set; }
 

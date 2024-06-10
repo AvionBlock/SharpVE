@@ -40,8 +40,6 @@ namespace SharpVE.Chunks.Layers
                     }
                 }
             }
-
-            subChunk.IsDirty = true; //Update subchunk.
         }
 
         /// <summary>
@@ -94,7 +92,7 @@ namespace SharpVE.Chunks.Layers
             {
                 var layer = new ByteLayeredChunk<T>(subChunk, blockState, localY);
                 layer.SetBlockState(subChunk, blockState, localX, localY, localZ);
-                subChunk.SetLayer(layer, localY); //Already updates subchunk.
+                subChunk.SetLayer(layer, localY);
                 return;
             }
 
@@ -112,8 +110,6 @@ namespace SharpVE.Chunks.Layers
                     BlockIDs[idx] = (byte)((block & 0x0F) | (paletteId << 4));
                 }
             }
-
-            subChunk.IsDirty = true; //Update subchunk.
         }
     }
 }

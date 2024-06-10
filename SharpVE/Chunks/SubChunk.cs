@@ -14,7 +14,7 @@ namespace SharpVE.Chunks
         private bool AllowPaletteCleaning = true;
 
         /// <summary>
-        /// Defines wether the subchunk has been updated, useful for remeshing. Set to false when you have acknowledged the update.
+        /// Defines whether the subchunk has been updated. Useful for remeshing.
         /// </summary>
         public bool IsDirty { get; set; } = true;
 
@@ -29,25 +29,12 @@ namespace SharpVE.Chunks
         public ILayeredChunk<T>[] Layers { get; private set; } = new ILayeredChunk<T>[ISubChunk<T>.SIZE];
 
         /// <summary>
-        /// Creates a new subchunk with a specified default palette size.
-        /// </summary>
-        /// <param name="defaultPaletteSize"> The size of the block palette on creation. </param>
-        public SubChunk(int defaultPaletteSize)
-        {
-            BlockPalette = new BlockPalette<T>(defaultPaletteSize);
-        }
-
-        /// <summary>
-        /// Creates a new subchunk with a default block palette size of 8.
-        /// </summary>
-        public SubChunk() : this(8) {}
-
-        /// <summary>
         /// Create a new subchunk with a default block state and a default block palette size of 8.
         /// </summary>
         /// <param name="defaultBlockState"> The default block state that the subchunk should generate. </param>
-        public SubChunk(T defaultBlockState) : this(8)
+        public SubChunk(T defaultBlockState, int defaultPaletteSize = 8)
         {
+            BlockPalette = new BlockPalette<T>(defaultPaletteSize);
             BlockPalette.Add(defaultBlockState);
             for(int i = 0; i < 8; i++)
             {
@@ -103,7 +90,8 @@ namespace SharpVE.Chunks
         /// <param name="localZ"> the local Z coordinate to set the blockstate to. </param> 
         public ISubChunk<T> SetBlockState(T blockState, int localX, int localY, int localZ)
         {
-            Layers[localY].SetBlockState(this, blockState, localX, localY, localZ); //Already calls to update SubChunk.
+            Layers[localY].SetBlockState(this, blockState, localX, localY, localZ);
+            IsDirty = true; //Call for update.
             return this;
         }
 
@@ -113,7 +101,7 @@ namespace SharpVE.Chunks
         /// <param name="blockState"> The blockstate to fill the subchunk with. </param>
         public ISubChunk<T> Fill(T blockState)
         {
-            return new SingleSubChunk<T>(blockState); //Already calls to update SubChunk.
+            return new SingleSubChunk<T>(blockState);
         }
 
         /// <summary>
@@ -136,6 +124,7 @@ namespace SharpVE.Chunks
             {
                 if(!(Layers[i] is SingleLayeredChunk<T> sLayer && sLayer.BlockState == blockState))
                 {
+                    IsDirty = true; //Call for update.
                     return this;
                 }
             }
@@ -157,7 +146,7 @@ namespace SharpVE.Chunks
                 }
             }
             Layers[localY] = layer;
-            IsDirty = true; //Call for update.
+            IsDirty = true;
         }
 
         /// <summary>

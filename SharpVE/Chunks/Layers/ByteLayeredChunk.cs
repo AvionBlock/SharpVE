@@ -33,7 +33,7 @@ namespace SharpVE.Chunks.Layers
             {
                 for (var z = 0; z < ISubChunk<T>.SIZE; z++)
                 {
-                    SetBlockState(subChunk, blockState, x, localY, z); //Already updates subchunk.
+                    SetBlockState(subChunk, blockState, x, localY, z);
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace SharpVE.Chunks.Layers
             {
                 for (int z = 0;z < ISubChunk<T>.SIZE; z++)
                 {
-                    SetBlockState(subChunk, nibbleLayeredChunk.GetBlockState(subChunk, x, z), x, localY, z); //Already updates subchunk.
+                    SetBlockState(subChunk, nibbleLayeredChunk.GetBlockState(subChunk, x, z), x, localY, z);
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace SharpVE.Chunks.Layers
             if (fullId > byte.MaxValue)
             {
                 subChunk.CleanPalette();
-                if (subChunk.GetBlockPaletteSize() <= byte.MaxValue) //Probably will change Size to a var.
+                if (subChunk.GetBlockPaletteSize() <= byte.MaxValue)
                 {
                     subChunk.SetBlockState(blockState, localX, localY, localZ);
                     return;
@@ -120,8 +120,6 @@ namespace SharpVE.Chunks.Layers
                 var idx = localX + (localZ * ISubChunk<T>.SIZE);
                 BlockIDs[idx] = (byte)fullId;
             }
-
-            subChunk.IsDirty = true; //Update subchunk.
         }
     }
 }
