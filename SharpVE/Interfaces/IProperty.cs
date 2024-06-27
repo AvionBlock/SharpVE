@@ -5,5 +5,6 @@
     /// </summary>
     public interface IProperty
     {
+        public bool EqualsType(object other);
     }
 }

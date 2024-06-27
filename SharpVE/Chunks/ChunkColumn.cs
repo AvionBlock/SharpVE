@@ -78,11 +78,13 @@ namespace SharpVE.Chunks
         /// <param name="localX">The local X in the chunk column.</param>
         /// <param name="y">The y position in the chunk column.</param>
         /// <param name="localZ">The local Z in the chunk column.</param>
-        public void SetBlockState(T blockState, int localX, int y, int localZ)
+        /// <returns>The subchunk that was modified.</returns>
+        public ISubChunk<T> SetBlockState(T blockState, int localX, int y, int localZ)
         {
             var ySection = (y - MIN_Y) / ISubChunk<T>.SIZE;
             var localY = BlockPosition.ToLocalYPosition(y, ISubChunk<T>.SIZE).Y;
             SubChunks[ySection] = SubChunks[ySection].SetBlockState(blockState, localX, localY, localZ);
+            return SubChunks[ySection];
         }
 
         /// <summary>
