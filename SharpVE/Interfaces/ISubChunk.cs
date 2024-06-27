@@ -15,11 +15,6 @@ namespace SharpVE.Interfaces
         static ushort NUM_OF_BLOCKS = (ushort)(SIZE ^ 3);
 
         /// <summary>
-        /// Defines whether the subchunk has been updated. Useful for remeshing.
-        /// </summary>
-        bool IsDirty { get; set; }
-
-        /// <summary>
         /// Get's a blockstate on the localX, localY and localZ coordinates.
         /// </summary>
         /// <param name="localX"> The local X coordinate </param>

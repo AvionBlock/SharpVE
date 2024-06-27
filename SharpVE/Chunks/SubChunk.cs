@@ -14,11 +14,6 @@ namespace SharpVE.Chunks
         private bool AllowPaletteCleaning = true;
 
         /// <summary>
-        /// Defines whether the subchunk has been updated. Useful for remeshing.
-        /// </summary>
-        public bool IsDirty { get; set; } = true;
-
-        /// <summary>
         /// The block palette inside the subchunk.
         /// </summary>
         public BlockPalette<T> BlockPalette { get; private set; }
@@ -91,7 +86,6 @@ namespace SharpVE.Chunks
         public ISubChunk<T> SetBlockState(T blockState, int localX, int localY, int localZ)
         {
             Layers[localY].SetBlockState(this, blockState, localX, localY, localZ);
-            IsDirty = true; //Call for update.
             return this;
         }
 
@@ -124,7 +118,6 @@ namespace SharpVE.Chunks
             {
                 if(!(Layers[i] is SingleLayeredChunk<T> sLayer && sLayer.BlockState == blockState))
                 {
-                    IsDirty = true; //Call for update.
                     return this;
                 }
             }
@@ -146,7 +139,6 @@ namespace SharpVE.Chunks
                 }
             }
             Layers[localY] = layer;
-            IsDirty = true;
         }
 
         /// <summary>
