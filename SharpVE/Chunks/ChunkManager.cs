@@ -1,62 +1,63 @@
 ﻿using SharpVE.Data;
+using SharpVE.Interfaces;
 using System.Collections.Generic;
 
 namespace SharpVE.Chunks
 {
     public class ChunkManager<T> where T : class
     {
-        private Dictionary<ChunkPosition, ChunkColumn<T>> chunks = new Dictionary<ChunkPosition, ChunkColumn<T>>();
+        private Dictionary<BlockPosition, ISubChunk<T>> chunks = new Dictionary<BlockPosition, ISubChunk<T>>();
 
         /// <summary>
-        /// Creates a new <see cref="ChunkColumn{T}"/>.
+        /// Creates a new <see cref="ISubChunk{T}"/>.
         /// </summary>
-        /// <param name="position">The position of the <see cref="ChunkColumn{T}"/>.</param>
-        /// <param name="blockState">The blockstate to fill teh <see cref="ChunkColumn{T}"/>.</param>
-        /// <returns>The created chunk column.</returns>
-        public ChunkColumn<T> CreateChunk(ChunkPosition position, T blockState)
+        /// <param name="position">The position of the <see cref="ISubChunk{T}"/>.</param>
+        /// <param name="blockState">The blockstate to fill the <see cref="ISubChunk{T}"/>.</param>
+        /// <returns>The created chunk.</returns>
+        public ISubChunk<T> CreateChunk(BlockPosition position, T blockState)
         {
-            var chunk = new ChunkColumn<T>(blockState);
+            var chunk = new SingleSubChunk<T>(blockState);
             chunks.Add(position, chunk);
             return chunk;
         }
 
         /// <summary>
-        /// Adds a <see cref="ChunkColumn{T}"/>.
+        /// Adds a <see cref="ISubChunk{T}"/>.
         /// </summary>
-        /// <param name="position">The position of the <see cref="ChunkColumn{T}"/>.</param>
-        /// <param name="chunkColumn">The <see cref="ChunkColumn{T}"/> to add.</param>
-        public void AddChunk(ChunkPosition position, ChunkColumn<T> chunkColumn)
+        /// <param name="position">The position of the <see cref="ISubChunk{T}"/>.</param>
+        /// <param name="chunk">The <see cref="ISubChunk{T}"/> to add.</param>
+        public void AddChunk(BlockPosition position, ISubChunk<T> chunk)
         {
-            chunks.Add(position, chunkColumn);
+            chunks.Add(position, chunk);
         }
 
         /// <summary>
-        /// Tries to add a <see cref="ChunkColumn{T}"/>.
+        /// Tries to add a <see cref="ISubChunk{T}"/>.
         /// </summary>
-        /// <param name="position">The position of the <see cref="ChunkColumn{T}"/>.</param>
-        /// <param name="chunkColumn">The <see cref="ChunkColumn{T}"/> to add.</param>
-        /// <returns>Whether the chunk column has been added.</returns>
-        public bool TryAddChunk(ChunkPosition position, ChunkColumn<T> chunkColumn)
+        /// <param name="position">The position of the <see cref="ISubChunk{T}"/>.</param>
+        /// <param name="chunk">The <see cref="ISubChunk{T}"/> to add.</param>
+        /// <returns>Whether the chunk has been added.</returns>
+        public bool TryAddChunk(BlockPosition position, ISubChunk<T> chunk)
         {
-            return chunks.TryAdd(position, chunkColumn);
+            return chunks.TryAdd(position, chunk);
         }
 
         /// <summary>
-        /// Get's a <see cref="ChunkColumn{T}"/>.
+        /// Get's a <see cref="ISubChunk{T}"/>.
         /// </summary>
-        /// <param name="position">The position of the <see cref="ChunkColumn{T}"/> to get.</param>
-        /// <returns>The <see cref="ChunkColumn{T}"/>.</returns>
-        public ChunkColumn<T> GetChunk(ChunkPosition position)
+        /// <param name="position">The position of the <see cref="ISubChunk{T}"/> to get.</param>
+        /// <returns>The <see cref="ISubChunk{T}"/>.</returns>
+        public ISubChunk<T> GetChunk(BlockPosition position)
         {
             return chunks[position];
         }
 
         /// <summary>
-        /// Tries to get a <see cref="ChunkColumn{T}"/>.
+        /// Tries to get a <see cref="ISubChunk{T}"/>.
         /// </summary>
-        /// <param name="position">The position of the <see cref="ChunkColumn{T}"/> to get.</param>
-        /// <returns>The <see cref="ChunkColumn{T}"/>.</returns>
-        public ChunkColumn<T>? TryGetChunk(ChunkPosition position)
+        /// <param name="position">The position of the <see cref="ISubChunk{T}"/> to get.</param>
+        /// <returns>The <see cref="ISubChunk{T}"/>.</returns>
+        public ISubChunk<T>? TryGetChunk(BlockPosition position)
         {
             chunks.TryGetValue(position, out var chunk);
             return chunk;
