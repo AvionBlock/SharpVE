@@ -47,9 +47,9 @@ namespace SharpVE.Chunks.Layers
         public ByteLayeredChunk(SubChunk<T> subChunk, NibbleLayeredChunk<T> nibbleLayeredChunk, int localY)
         {
             BlockIDs = new byte[ISubChunk<T>.SIZE * ISubChunk<T>.SIZE];
-            for(int x = 0; x < ISubChunk<T>.SIZE; x++)
+            for(var x = 0; x < ISubChunk<T>.SIZE; x++)
             {
-                for (int z = 0;z < ISubChunk<T>.SIZE; z++)
+                for (var z = 0; z < ISubChunk<T>.SIZE; z++)
                 {
                     SetBlockState(subChunk, nibbleLayeredChunk.GetBlockState(subChunk, x, z), x, localY, z);
                 }
@@ -80,7 +80,7 @@ namespace SharpVE.Chunks.Layers
             var idx = localX + (localZ * ISubChunk<T>.SIZE);
             var blockId = BlockIDs[idx];
 
-            return blockId & 0xFF;
+            return blockId;
         }
 
         /// <summary>

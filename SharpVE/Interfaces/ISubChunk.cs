@@ -23,6 +23,12 @@ namespace SharpVE.Interfaces
         T GetBlockState(int localX, int localY, int localZ);
 
         /// <summary>
+        /// Get's a blockstate from the Id.
+        /// </summary>
+        /// <param name="blockId">The blockstate Id.</param>
+        T? GetBlockStateFromID(int blockId);
+
+        /// <summary>
         /// Get's a blockstate ID on the localX, localY and localZ coordinates.
         /// </summary>
         /// <param name="localX"> The local X coordinate </param>
@@ -59,16 +65,16 @@ namespace SharpVE.Interfaces
         ISubChunk<T> FillLayer(T blockState, int localY);
 
         /// <summary>
-        /// Check's if the entire subchunk matches the predicate.
-        /// </summary>
-        /// <param name="predicate"> The predicate to check against. </param>
-        bool IsAll(Predicate<T> predicate);
-
-        /// <summary>
         /// Check's if the entire subchunk matches the blockstate.
         /// </summary>
         /// <param name="blockState"> The blockstate to check against. </param>
         bool IsAll(T blockState);
+
+        /// <summary>
+        /// Check's if the entire subchunk matches the predicate.
+        /// </summary>
+        /// <param name="predicate"> The predicate to check against. </param>
+        bool IsAll(Predicate<T> predicate);
 
         /// <summary>
         /// Get's the size of the block palette.

@@ -23,15 +23,19 @@ namespace SharpVE.Chunks
         /// </summary>
         public ILayeredChunk<T>[] Layers { get; private set; } = new ILayeredChunk<T>[ISubChunk<T>.SIZE];
 
+        public SubChunk(int defaultPaletteSize)
+        {
+            BlockPalette = new BlockPalette<T>(defaultPaletteSize);
+        }
+
         /// <summary>
         /// Create a new subchunk with a default block state and a default block palette size of 8.
         /// </summary>
         /// <param name="defaultBlockState"> The default block state that the subchunk should generate. </param>
-        public SubChunk(T defaultBlockState, int defaultPaletteSize = 8)
+        public SubChunk(T defaultBlockState) : this(8)
         {
-            BlockPalette = new BlockPalette<T>(defaultPaletteSize);
             BlockPalette.Add(defaultBlockState);
-            for(int i = 0; i < 8; i++)
+            for(int i = 0; i < ISubChunk<T>.SIZE; i++)
             {
                 FillLayer(defaultBlockState, i);
             }
@@ -46,6 +50,15 @@ namespace SharpVE.Chunks
         public T GetBlockState(int localX, int localY, int localZ)
         {
             return Layers[localY].GetBlockState(this, localX, localZ);
+        }
+
+        /// <summary>
+        /// Get's a blockstate from the Id.
+        /// </summary>
+        /// <param name="blockId">The blockstate Id.</param>
+        public T GetBlockStateFromID(int blockId)
+        {
+            return BlockPalette.Get(blockId);
         }
 
         /// <summary>
@@ -142,22 +155,6 @@ namespace SharpVE.Chunks
         }
 
         /// <summary>
-        /// Check's if the entire subchunk matches the predicate.
-        /// </summary>
-        /// <param name="predicate"> The predicate to check against. </param>
-        public bool IsAll(Predicate<T> predicate)
-        {
-            var palette = BlockPalette.BlockStates;
-            var paletteSize = palette.Length;
-            for(int i = 0; i < paletteSize; i++)
-            {
-                T blockState = palette[i];
-                if (!predicate.Invoke(blockState)) return false;
-            }
-            return true;
-        }
-
-        /// <summary>
         /// Check's if the entire subchunk matches the blockstate.
         /// </summary>
         /// <param name="blockState"> The blockstate to check against. </param>
@@ -167,17 +164,41 @@ namespace SharpVE.Chunks
         }
 
         /// <summary>
+        /// Check's if the entire subchunk matches the predicate.
+        /// </summary>
+        /// <param name="predicate"> The predicate to check against. </param>
+        public bool IsAll(Predicate<T> predicate)
+        {
+            var palette = BlockPalette.BlockStates;
+            var paletteSize = GetBlockPaletteSize();
+            for(int i = 0; i < paletteSize; i++)
+            {
+                T blockState = palette[i];
+                if (!predicate.Invoke(blockState)) return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// Cleans unused blockstates from the subchunk blockstate palette.
         /// </summary>
         public void CleanPalette()
         {
-            if (!AllowPaletteCleaning) return; //Prevent recursions.
-
             var currentSize = GetBlockPaletteSize();
+            if (!AllowPaletteCleaning || currentSize == 1) return; //Prevent recursions.
+
             SubChunk<T> tempSubChunk = new SubChunk<T>(GetBlockState(0, 0, 0));
             tempSubChunk.AllowPaletteCleaning = false;
             for (int x = 0; x < ISubChunk<T>.SIZE; x++)
             {
+                var layer = Layers[x];
+
+                if (layer is SharedLayeredChunk<T>)
+                {
+                    tempSubChunk.SetLayer(layer, x);
+                    continue;
+                }
+
                 for (int y = 0; y < ISubChunk<T>.SIZE; y++)
                 {
                     for (int z = 0; z < ISubChunk<T>.SIZE; z++)
@@ -190,9 +211,6 @@ namespace SharpVE.Chunks
 
             BlockPalette.CopyFromPalette(tempSubChunk.BlockPalette);
             Layers = tempSubChunk.Layers;
-
-            var amountRemoved = currentSize - tempSubChunk.GetBlockPaletteSize();
-            Debug.WriteLine($"Cleaned {amountRemoved} blockstates from the palette.");
             
             if(GetBlockPaletteSize() > ISubChunk<T>.NUM_OF_BLOCKS)
             {

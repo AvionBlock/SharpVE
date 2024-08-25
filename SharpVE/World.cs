@@ -1,7 +1,4 @@
 ﻿using SharpVE.Chunks;
-using SharpVE.Data;
-using SharpVE.Interfaces;
-using System.Collections.Generic;
 
 namespace SharpVE
 {

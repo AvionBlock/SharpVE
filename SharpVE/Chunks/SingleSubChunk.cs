@@ -10,11 +10,6 @@ namespace SharpVE.Chunks
     public class SingleSubChunk<T> : ISubChunk<T> where T : class
     {
         /// <summary>
-        /// Defines wether the subchunk has been updated, useful for remeshing. Set to false when you have acknowledged the update.
-        /// </summary>
-        public bool IsDirty { get; set; } = true;
-
-        /// <summary>
         /// The set blockstate.
         /// </summary>
         public T BlockState;
@@ -29,6 +24,14 @@ namespace SharpVE.Chunks
         }
 
         /// <summary>
+        /// Get's the blockstate;
+        /// </summary>
+        public T GetBlockState()
+        {
+            return BlockState;
+        }
+
+        /// <summary>
         /// Get's a blockstate on the localX, localY and localZ coordinates.
         /// </summary>
         /// <param name="localX"> The local X coordinate </param>
@@ -37,6 +40,15 @@ namespace SharpVE.Chunks
         public T GetBlockState(int localX, int localY, int localZ)
         {
             return BlockState;
+        }
+
+        /// <summary>
+        /// Get's a blockstate from the Id.
+        /// </summary>
+        /// <param name="blockId">The blockstate Id.</param>
+        public T? GetBlockStateFromID(int blockId)
+        {
+            return blockId == 0 ? BlockState : null;
         }
 
         /// <summary>
@@ -102,21 +114,21 @@ namespace SharpVE.Chunks
         }
 
         /// <summary>
-        /// Check's if the entire subchunk matches the predicate.
-        /// </summary>
-        /// <param name="predicate"> The predicate to check against. </param>
-        public bool IsAll(Predicate<T> predicate)
-        {
-            return predicate.Invoke(BlockState);
-        }
-
-        /// <summary>
         /// Check's if the entire subchunk matches the blockstate.
         /// </summary>
         /// <param name="blockState"> The blockstate to check against. </param>
         public bool IsAll(T blockState)
         {
             return blockState == BlockState;
+        }
+
+        /// <summary>
+        /// Check's if the entire subchunk matches the predicate.
+        /// </summary>
+        /// <param name="predicate"> The predicate to check against. </param>
+        public bool IsAll(Predicate<T> predicate)
+        {
+            return predicate.Invoke(BlockState);
         }
 
         /// <summary>

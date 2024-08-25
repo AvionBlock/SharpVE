@@ -47,9 +47,9 @@ namespace SharpVE.Chunks.Layers
         public ShortLayeredChunk(SubChunk<T> subChunk, ByteLayeredChunk<T> byteLayeredChunk, int localY)
         {
             BlockIDs = new short[ISubChunk<T>.SIZE * ISubChunk<T>.SIZE];
-            for (int x = 0; x < ISubChunk<T>.SIZE; x++)
+            for (var x = 0; x < ISubChunk<T>.SIZE; x++)
             {
-                for (int z = 0; z < ISubChunk<T>.SIZE; z++)
+                for (var z = 0; z < ISubChunk<T>.SIZE; z++)
                 {
                     SetBlockState(subChunk, byteLayeredChunk.GetBlockState(subChunk, x, z), x, localY, z);
                 }
