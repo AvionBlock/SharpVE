@@ -5,17 +5,27 @@ namespace SharpVE.Blocks
 {
     public class Block
     {
-        Dictionary<string, IProperty> PropertyMap { get; set; }
+        private Dictionary<string, IProperty> propertyMap { get; set; }
 
         public string Identifier { get; }
 
         public bool IsSolid { get; set; }
         public bool IsAlpha { get; set; } //Transparent
 
-        public Block(string identifier)
+        public Block(string identifier, Dictionary<string, IProperty> propertyMap)
         {
             Identifier = identifier;
-            PropertyMap = new Dictionary<string, IProperty>();
+            this.propertyMap = propertyMap;
+        }
+
+        public BlockState GetDefaultBlockState()
+        {
+            var blockState = new BlockState(this);
+            foreach(var property in propertyMap)
+            {
+                blockState.SetState(property.Key, property.Value);
+            }
+            return blockState;
         }
     }
 }
