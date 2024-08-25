@@ -62,7 +62,7 @@ namespace SharpVE.Blocks
 
         public override string ToString()
         {
-            return $"{nameof(Block)}: Block.Name (NOT IMPLEMENTED!), {nameof(Data)}: {Data}, {nameof(States)} {{ {string.Join(';', States)} }}";
+            return $"{nameof(Block)}: {Block.Identifier}, {nameof(Data)}: {Data}, {nameof(States)} {{ {string.Join(';', States)} }}";
         }
     }
 }
