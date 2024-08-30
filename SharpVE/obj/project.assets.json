@@ -8,24 +8,32 @@
     ".NETStandard,Version=v2.1": []
   },
   "packageFolders": {
-    "/home/asuka/.nuget/packages/": {}
+    "C:\\Users\\flyin\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/asuka/Documents/Github/BedrockReplay/SharpVE/SharpVE/SharpVE.csproj",
+      "projectUniqueName": "C:\\Users\\flyin\\OneDrive\\Documents\\Github\\BedrockReplay\\SharpVE\\SharpVE\\SharpVE.csproj",
       "projectName": "SharpVE",
-      "projectPath": "/home/asuka/Documents/Github/BedrockReplay/SharpVE/SharpVE/SharpVE.csproj",
-      "packagesPath": "/home/asuka/.nuget/packages/",
-      "outputPath": "/home/asuka/Documents/Github/BedrockReplay/SharpVE/SharpVE/obj/",
+      "projectPath": "C:\\Users\\flyin\\OneDrive\\Documents\\Github\\BedrockReplay\\SharpVE\\SharpVE\\SharpVE.csproj",
+      "packagesPath": "C:\\Users\\flyin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\flyin\\OneDrive\\Documents\\Github\\BedrockReplay\\SharpVE\\SharpVE\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/home/asuka/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\flyin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -38,6 +46,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -59,7 +72,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.108/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }
